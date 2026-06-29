@@ -163,13 +163,11 @@ resource "aws_cloudfront_distribution" "site" {
   price_class         = "PriceClass_100"
 
   origin {
-    domain_name              = aws_s3_bucket.site.bucket_regional_domain_name
-    origin_id                = "portfolio-s3"
-    origin_access_control_id = aws_cloudfront_origin_access_control.site.id
+    domain_name                 = aws_s3_bucket.site.bucket_regional_domain_name
+    origin_id                   = "portfolio-s3"
+    origin_access_control_id    = aws_cloudfront_origin_access_control.site.id
+    response_completion_timeout = 0
 
-    s3_origin_config {
-      origin_access_identity = ""
-    }
   }
 
   default_cache_behavior {
