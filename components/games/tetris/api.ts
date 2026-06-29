@@ -1,5 +1,5 @@
 export type User = {
-  id: number;
+  id: string | number;
   username: string;
   picture_url?: string | null;
 };
@@ -10,7 +10,7 @@ export type AuthResponse = {
 };
 
 export type LeaderboardEntry = {
-  id: number;
+  id: string | number;
   username: string;
   score: number;
   level: number;

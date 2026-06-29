@@ -56,10 +56,13 @@ The default domain is `jeremysdemers.com`; override it with a `.tfvars` file if 
 After Terraform has created the infrastructure and the AWS CLI is authenticated:
 
 ```bash
+export ARCADE_API_URL="https://YOUR_ARCADE_API.execute-api.us-east-1.amazonaws.com"
+export TWIN_API_URL="https://YOUR_TWIN_API.execute-api.us-east-1.amazonaws.com"
+export GOOGLE_CLIENT_ID="YOUR_CLIENT_ID.apps.googleusercontent.com"
 ./scripts/deploy.sh
 ```
 
-The script builds the static export, synchronizes it to the Terraform-managed bucket, and invalidates CloudFront.
+The script injects the production API endpoints and Google client ID at build time, builds the static export, synchronizes it to the Terraform-managed bucket, and invalidates CloudFront. Both games use the same shared Arcade API endpoint in production.
 
 ## Project layout
 

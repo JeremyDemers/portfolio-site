@@ -1,8 +1,8 @@
-export type User = { id: number; username: string; picture_url?: string | null };
+export type User = { id: string | number; username: string; picture_url?: string | null };
 export type AuthResponse = { token: string; user: User };
 
 export type LeaderboardEntry = {
-  id: number;
+  id: string | number;
   username: string;
   score: number;
   level: number;
