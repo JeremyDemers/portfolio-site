@@ -144,6 +144,16 @@ resource "aws_cloudfront_function" "clean_urls" {
       var request = event.request;
       var uri = request.uri;
 
+      if (request.headers.host && request.headers.host.value === 'www.${var.domain_name}') {
+        return {
+          statusCode: 301,
+          statusDescription: 'Moved Permanently',
+          headers: {
+            location: { value: 'https://${var.domain_name}' + uri }
+          }
+        };
+      }
+
       if (uri.endsWith('/')) {
         request.uri += 'index.html';
       } else if (!uri.split('/').pop().includes('.')) {
