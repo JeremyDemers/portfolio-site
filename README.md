@@ -1,5 +1,9 @@
 # Jeremy Demers Portfolio
 
+<p align="center">
+  <img src="./public/images/portfolio-site-social-preview.jpg" alt="Jeremy Demers Digital Twin — Next.js, React, TypeScript, FastAPI, Python, Amazon Bedrock, AWS Lambda, S3, CloudFront, and Terraform" width="100%">
+</p>
+
 The source and AWS infrastructure for [jeremysdemers.com](https://jeremysdemers.com). The site introduces Jeremy's work and provides a shared home for the Arcade games and Digital Twin project.
 
 ## Local development
