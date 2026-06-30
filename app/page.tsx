@@ -4,7 +4,7 @@ import { ProjectVisual } from "@/components/ProjectVisual";
 import { projects } from "@/lib/projects";
 
 const capabilities = [
-  { icon: Code2, title: "Full-stack product work", text: "Type-safe interfaces, Python APIs, authentication, persistence, and the details that turn code into a product." },
+  { icon: Code2, title: "Full-stack product work", text: "Type-safe interfaces, Python and C# APIs, authentication, persistence, and the details that turn code into a product." },
   { icon: Cloud, title: "Serverless AWS systems", text: "Lambda, API Gateway, S3, CloudFront, DynamoDB, Bedrock, IAM, Route 53, and infrastructure managed with Terraform." },
   { icon: Gamepad2, title: "Interactive engineering", text: "Responsive game loops, canvas rendering, keyboard and touch input, audio, animation, and careful interface feedback." },
 ];
@@ -47,7 +47,7 @@ export default function Home() {
             <p className="section-kicker">Selected work</p>
             <h2>Projects made to be used.</h2>
           </div>
-          <p>Each project explores a different edge of modern application development—from real-time interaction to cloud-native AI.</p>
+          <p>Each project explores a different edge of modern application development—from real-time interaction and data APIs to cloud-native AI.</p>
         </div>
 
         <div className="project-grid">
@@ -61,7 +61,13 @@ export default function Home() {
                 <div className="tag-list">
                   {project.tech.slice(0, 4).map((technology) => <span key={technology}>{technology}</span>)}
                 </div>
-                <Link className="project-link" href={project.href}>View project <span aria-hidden="true">↗</span></Link>
+                {project.external ? (
+                  <a className="project-link" href={project.href} target="_blank" rel="noreferrer noopener">
+                    View source <span aria-hidden="true">↗</span>
+                  </a>
+                ) : (
+                  <Link className="project-link" href={project.href}>View project <span aria-hidden="true">↗</span></Link>
+                )}
               </div>
             </article>
           ))}
@@ -101,4 +107,3 @@ export default function Home() {
     </main>
   );
 }
-

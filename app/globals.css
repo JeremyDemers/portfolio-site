@@ -99,10 +99,11 @@ a { color: inherit; text-decoration: none; }
 .project-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; }
 .project-card { overflow: hidden; border: 1px solid var(--line); background: rgba(15,22,36,.72); transition: transform .25s ease, border-color .25s ease; }
 .project-card:hover { transform: translateY(-4px); border-color: rgba(129,247,216,.28); }
-.project-card-twin { grid-column: 1 / -1; display: grid; grid-template-columns: 1.08fr .92fr; }
-.project-card-twin .project-visual { min-height: 410px; }
+.project-card-twin, .project-card-api { grid-column: 1 / -1; display: grid; grid-template-columns: 1.08fr .92fr; }
+.project-card-api { grid-template-columns: .92fr 1.08fr; }
+.project-card-twin .project-visual, .project-card-api .project-visual { min-height: 410px; }
 .project-card-copy { padding: 31px; }
-.project-card-twin .project-card-copy { display: flex; flex-direction: column; justify-content: center; padding: 54px; }
+.project-card-twin .project-card-copy, .project-card-api .project-card-copy { display: flex; flex-direction: column; justify-content: center; padding: 54px; }
 .project-number { margin-bottom: 14px; color: var(--dim); font: 500 .65rem var(--font-mono); letter-spacing: .07em; text-transform: uppercase; }
 .project-card h3 { margin: 0 0 12px; font-size: 1.8rem; letter-spacing: -.04em; }
 .project-card p { max-width: 580px; margin: 0; color: var(--muted); }
@@ -111,7 +112,7 @@ a { color: inherit; text-decoration: none; }
 .project-link, .text-link { width: fit-content; display: inline-flex; align-items: center; gap: 9px; margin-top: 28px; padding-bottom: 4px; border-bottom: 1px solid rgba(129,247,216,.34); color: var(--mint); font: 600 .72rem var(--font-mono); text-transform: uppercase; letter-spacing: .06em; }
 
 .project-visual { position: relative; min-height: 360px; overflow: hidden; border-bottom: 1px solid var(--line); background-color: #0a111d; }
-.project-card-twin .project-visual { border: 0; border-right: 1px solid var(--line); }
+.project-card-twin .project-visual, .project-card-api .project-visual { border: 0; border-right: 1px solid var(--line); }
 .visual-label { position: absolute; right: 18px; bottom: 15px; color: rgba(218,231,242,.36); font: 500 .6rem var(--font-mono); letter-spacing: .1em; }
 .visual-tetris { background: radial-gradient(circle at 48% 55%, rgba(57,180,166,.14), transparent 52%), #09111c; }
 .tetris-grid { position: absolute; inset: 35px 25%; display: grid; grid-template-columns: repeat(8, 1fr); grid-template-rows: repeat(5, 1fr); opacity: .22; }
@@ -138,6 +139,22 @@ a { color: inherit; text-decoration: none; }
 .message { position: absolute; max-width: 270px; padding: 12px 15px; border: 1px solid var(--line); color: #93a5b8; background: rgba(15,24,39,.9); font: 400 .7rem/1.5 var(--font-mono); }
 .message-one { top: 28%; right: 9%; }
 .message-two { top: 52%; right: 5%; color: #bdd6d1; border-color: rgba(129,247,216,.2); }
+.visual-api { background: radial-gradient(circle at 45% 48%, rgba(90,155,255,.13), transparent 48%), linear-gradient(145deg, #09111d, #0b1723); }
+.api-window { position: absolute; inset: 52px 9% auto; overflow: hidden; border: 1px solid rgba(110,165,215,.25); border-radius: 5px; background: rgba(6,13,23,.84); box-shadow: 0 24px 70px rgba(0,0,0,.3); }
+.api-window-bar { height: 40px; display: flex; align-items: center; gap: 7px; padding: 0 13px; border-bottom: 1px solid var(--line); }
+.api-window-bar i { width: 7px; height: 7px; border-radius: 50%; background: #344154; }
+.api-window-bar i:first-child { background: #f17a7a; }
+.api-window-bar i:nth-child(2) { background: var(--amber); }
+.api-window-bar i:nth-child(3) { background: var(--mint); }
+.api-window-bar span { margin-left: 7px; color: #73869a; font: 500 .6rem var(--font-mono); }
+.api-endpoint { min-height: 49px; display: grid; grid-template-columns: 42px 1fr auto; align-items: center; gap: 12px; padding: 0 15px; border-bottom: 1px solid rgba(255,255,255,.05); font: 500 .61rem var(--font-mono); }
+.api-endpoint:last-child { border-bottom: 0; }
+.api-endpoint b { color: var(--mint); font-size: .58rem; }
+.api-endpoint code { overflow: hidden; color: #a8b8c7; text-overflow: ellipsis; white-space: nowrap; }
+.api-endpoint > span { color: #6f9f8e; }
+.api-pipeline { position: absolute; right: 10%; bottom: 56px; left: 10%; display: flex; align-items: center; justify-content: space-between; gap: 10px; color: var(--mint); font: 650 .58rem var(--font-mono); letter-spacing: .05em; }
+.api-pipeline span { padding: 8px 10px; border: 1px solid rgba(129,247,216,.18); background: rgba(10,22,31,.8); }
+.api-pipeline i { color: rgba(129,247,216,.45); font-style: normal; }
 
 .capabilities-section { padding-block: 120px; border-block: 1px solid var(--line); background: rgba(12,18,30,.72); }
 .compact-heading { margin-bottom: 45px; }
@@ -261,9 +278,9 @@ a { color: inherit; text-decoration: none; }
   .hero, .project-hero { grid-template-columns: 1fr; gap: 65px; }
   .hero { padding-block: 85px; }
   .project-grid { grid-template-columns: 1fr; }
-  .project-card-twin { grid-column: auto; display: block; }
-  .project-card-twin .project-visual { min-height: 360px; border-right: 0; border-bottom: 1px solid var(--line); }
-  .project-card-twin .project-card-copy { padding: 31px; }
+  .project-card-twin, .project-card-api { grid-column: auto; display: block; }
+  .project-card-twin .project-visual, .project-card-api .project-visual { min-height: 360px; border-right: 0; border-bottom: 1px solid var(--line); }
+  .project-card-twin .project-card-copy, .project-card-api .project-card-copy { padding: 31px; }
   .capability-grid { grid-template-columns: 1fr; }
   .capability { min-height: 230px; }
   .capability h3 { margin-top: 45px; }
@@ -284,7 +301,7 @@ a { color: inherit; text-decoration: none; }
   .section-heading { display: block; }
   .section-heading > p { margin-top: 24px; }
   .work-section, .capabilities-section { padding-block: 85px; }
-  .project-visual, .project-card-twin .project-visual { min-height: 285px; }
+  .project-visual, .project-card-twin .project-visual, .project-card-api .project-visual { min-height: 285px; }
   .tetris-grid { inset-inline: 16%; }
   .tetromino-one { left: 20%; }
   .tetromino-two { right: 18%; }

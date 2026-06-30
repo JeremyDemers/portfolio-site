@@ -1,12 +1,13 @@
 export type Project = {
-  slug: "tetris" | "neon-shatter" | "digital-twin";
+  slug: "tetris" | "neon-shatter" | "digital-twin" | "empower-api";
   name: string;
   eyebrow: string;
   summary: string;
   description: string;
   href: string;
   source: string;
-  visual: "tetris" | "shatter" | "twin";
+  visual: "tetris" | "shatter" | "twin" | "api";
+  external?: boolean;
   tech: string[];
   highlights: string[];
   architecture: string[];
@@ -73,11 +74,33 @@ export const projects: Project[] = [
     ],
     architecture: ["CloudFront and static Next.js export", "API Gateway and Lambda", "Amazon Bedrock and private S3 memory"],
   },
+  {
+    slug: "empower-api",
+    name: "Empower API",
+    eyebrow: "Enterprise data integration",
+    summary:
+      "An ASP.NET Core 8 API for querying Waters Empower 3 data stored in Oracle, with schema tracking, documented endpoints, and container deployment.",
+    description:
+      "Empower API provides a documented service layer over Waters Empower 3 data in Oracle. It combines focused query endpoints with SQLite schema tracking, background services, structured request logging, and a Docker-based runtime.",
+    href: "https://github.com/JeremyDemers/Empower-API",
+    source: "https://github.com/JeremyDemers/Empower-API",
+    visual: "api",
+    external: true,
+    tech: ["C#", "ASP.NET Core 8", "Oracle", "SQLite", "Docker", "Swagger"],
+    highlights: [
+      "Purpose-built endpoints for querying Waters Empower 3 data",
+      "Oracle data access with SQLite schema metadata",
+      "Swagger/OpenAPI documentation and structured Serilog logging",
+      "Background services and a multi-stage Docker build",
+    ],
+    architecture: ["ASP.NET Core API", "Oracle data source and SQLite metadata", "Swagger and Docker runtime"],
+  },
 ];
 
-export const games = projects.filter((project) => project.slug !== "digital-twin");
+export const games = projects.filter(
+  (project) => project.slug === "tetris" || project.slug === "neon-shatter",
+);
 
 export function getProject(slug: string): Project | undefined {
   return projects.find((project) => project.slug === slug);
 }
-
