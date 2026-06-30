@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Github, Linkedin } from "lucide-react";
 
 const navigation = [
   { label: "Tetris", href: "/games/tetris/" },
@@ -19,14 +20,15 @@ export function SiteHeader() {
             <Link key={item.href} href={item.href}>{item.label}</Link>
           ))}
         </nav>
-        <a className="nav-github" href="https://github.com/JeremyDemers" target="_blank" rel="noreferrer noopener">
-          GitHub <span aria-hidden="true">↗</span>
-        </a>
-        <a className="nav-github" href="https://www.linkedin.com/in/jeremydemers/" target="_blank" rel="noreferrer noopener">
-          LinkedIn <span aria-hidden="true">↗</span>
-        </a>
+        <div className="header-socials" aria-label="Professional profiles">
+          <a className="nav-social" href="https://www.linkedin.com/in/jeremy-demers/" target="_blank" rel="noopener noreferrer">
+            <Linkedin size={14} aria-hidden="true" /> LinkedIn
+          </a>
+          <a className="nav-social" href="https://github.com/JeremyDemers" target="_blank" rel="noopener noreferrer">
+            <Github size={14} aria-hidden="true" /> GitHub
+          </a>
+        </div>
       </div>
     </header>
   );
 }
-

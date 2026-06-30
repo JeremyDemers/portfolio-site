@@ -21,6 +21,20 @@ export const metadata: Metadata = {
     url: "https://jeremysdemers.com",
     siteName: "Jeremy Demers",
     type: "website",
+    images: [
+      {
+        url: "/images/portfolio-site-social-preview.jpg",
+        width: 1280,
+        height: 640,
+        alt: "Jeremy Demers — full-stack developer, AWS builder, and creative technologist",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Jeremy Demers | Full-stack developer",
+    description: "Interactive applications, generative AI, and serverless systems on AWS.",
+    images: ["/images/portfolio-site-social-preview.jpg"],
   },
 };
 
