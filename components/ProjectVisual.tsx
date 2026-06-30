@@ -27,6 +27,23 @@ export function ProjectVisual({ variant, compact = false }: { variant: Project["
     );
   }
 
+  if (variant === "api") {
+    return (
+      <div className={`project-visual visual-api ${compact ? "compact" : ""}`} aria-hidden="true">
+        <div className="api-window">
+          <div className="api-window-bar"><i /><i /><i /><span>/api/EmpowerData</span></div>
+          <div className="api-endpoint"><b>GET</b><code>/data-by-result-id</code><span>200</span></div>
+          <div className="api-endpoint"><b>GET</b><code>/instruments-in-use</code><span>200</span></div>
+          <div className="api-endpoint"><b>GET</b><code>/data-by-time-range</code><span>200</span></div>
+        </div>
+        <div className="api-pipeline">
+          <span>EMPOWER 3</span><i>→</i><span>ASP.NET 8</span><i>→</i><span>JSON</span>
+        </div>
+        <div className="visual-label">C# / ORACLE</div>
+      </div>
+    );
+  }
+
   return (
     <div className={`project-visual visual-twin ${compact ? "compact" : ""}`} aria-hidden="true">
       <div className="twin-orbit orbit-one" />
@@ -38,4 +55,3 @@ export function ProjectVisual({ variant, compact = false }: { variant: Project["
     </div>
   );
 }
-
