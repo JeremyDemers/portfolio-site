@@ -13,10 +13,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: 22
           cache: npm
@@ -30,3 +30,59 @@ jobs:
       - name: Build static export
         run: npm run build
 
+  deploy:
+    name: Deploy production portfolio
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: frontend
+    runs-on: ubuntu-latest
+    concurrency:
+      group: portfolio-production
+      cancel-in-progress: false
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Build production export
+        env:
+          NEXT_PUBLIC_GOOGLE_CLIENT_ID: ${{ vars.GOOGLE_CLIENT_ID }}
+          NEXT_PUBLIC_NEON_SHATTER_API_URL: ${{ vars.ARCADE_API_URL }}
+          NEXT_PUBLIC_TETRIS_API_URL: ${{ vars.ARCADE_API_URL }}
+          NEXT_PUBLIC_TWIN_API_URL: ${{ vars.TWIN_API_URL }}
+        run: |
+          npm ci
+          npm run build
+
+      - name: Configure temporary AWS credentials
+        uses: aws-actions/configure-aws-credentials@v6
+        with:
+          role-to-assume: ${{ vars.AWS_DEPLOY_ROLE_ARN }}
+          role-session-name: portfolio-${{ github.run_id }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Publish static export
+        run: |
+          aws s3 sync out/ "s3://${{ vars.SITE_BUCKET }}/" --delete --only-show-errors
+          INVALIDATION_ID=$(aws cloudfront create-invalidation \
+            --distribution-id "${{ vars.CLOUDFRONT_DISTRIBUTION_ID }}" \
+            --paths '/*' \
+            --query 'Invalidation.Id' \
+            --output text)
+          aws cloudfront wait invalidation-completed \
+            --distribution-id "${{ vars.CLOUDFRONT_DISTRIBUTION_ID }}" \
+            --id "$INVALIDATION_ID"
+
+      - name: Verify production routes
+        run: |
+          curl --fail-with-body --silent --show-error --output /dev/null https://jeremysdemers.com/
+          curl --fail-with-body --silent --show-error --output /dev/null https://jeremysdemers.com/games/tetris
+          curl --fail-with-body --silent --show-error --output /dev/null https://jeremysdemers.com/games/neon-shatter
+          curl --fail-with-body --silent --show-error --output /dev/null https://jeremysdemers.com/digital-twin

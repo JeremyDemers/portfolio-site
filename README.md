@@ -1,5 +1,9 @@
 # Jeremy Demers Portfolio
 
+<p align="center">
+  <img src="./public/images/portfolio-site-social-preview.jpg" alt="Jeremy Demers Digital Twin — Next.js, React, TypeScript, FastAPI, Python, Amazon Bedrock, AWS Lambda, S3, CloudFront, and Terraform" width="100%">
+</p>
+
 The source and AWS infrastructure for [jeremysdemers.com](https://jeremysdemers.com). The site introduces Jeremy's work and provides a shared home for the Arcade games and Digital Twin project.
 
 ## Local development
@@ -41,9 +45,10 @@ The S3 state bucket must exist before initialization. Keep state outside this re
 ```bash
 terraform -chdir=infrastructure init \
   -backend-config="bucket=YOUR_TERRAFORM_STATE_BUCKET" \
-  -backend-config="key=portfolio/prod.tfstate" \
+  -backend-config="key=portfolio/prod/terraform.tfstate" \
   -backend-config="region=us-east-1" \
-  -backend-config="encrypt=true"
+  -backend-config="encrypt=true" \
+  -backend-config="use_lockfile=true"
 
 terraform -chdir=infrastructure plan
 terraform -chdir=infrastructure apply
@@ -64,15 +69,19 @@ export GOOGLE_CLIENT_ID="YOUR_CLIENT_ID.apps.googleusercontent.com"
 
 The script injects the production API endpoints and Google client ID at build time, builds the static export, synchronizes it to the Terraform-managed bucket, and invalidates CloudFront. Both games use the same shared Arcade API endpoint in production.
 
+After CI passes on `main`, GitHub Actions performs the same application deployment automatically with short-lived AWS OIDC credentials. The deploy role can sync only this site's bucket and invalidate only this site's CloudFront distribution; it cannot change Terraform infrastructure.
+
+The separate `infrastructure/automation` Terraform root manages the three repository-specific OIDC roles used by Arcade, Digital Twin, and this portfolio.
+
 ## Project layout
 
 ```text
 app/                    Next.js routes and global presentation
 components/             Shared navigation and project components
 lib/                    Structured project content
-infrastructure/         AWS Terraform configuration
+infrastructure/         Site and GitHub OIDC Terraform configuration
 scripts/                Local deployment automation
-.github/workflows/      Continuous integration
+.github/workflows/      Continuous integration and deployment
 ```
 
 The playable clients are integrated at `/games/tetris` and `/games/neon-shatter`. The conversational client is integrated at `/digital-twin`. Their source projects remain independent; this repository owns their shared presentation and deployment composition.

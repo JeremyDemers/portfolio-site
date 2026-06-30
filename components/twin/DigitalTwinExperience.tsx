@@ -98,7 +98,7 @@ export function DigitalTwinExperience() {
         </div>
         <div className="twin-heading-actions">
           <button type="button" onClick={() => setShowArchitecture(true)}><Network size={17} /> Architecture</button>
-          <a href="https://github.com/JeremyDemers/digital-twin" target="_blank" rel="noreferrer"><Github size={17} /> Source</a>
+          <a href="https://github.com/JeremyDemers/digital-twin" target="_blank" rel="noreferrer noopener"><Github size={17} /> Source</a>
         </div>
       </section>
 

@@ -23,7 +23,7 @@ export default function Home() {
           </p>
           <div className="hero-actions">
             <a className="button button-primary" href="#work">Explore my work <ArrowDownRight size={17} /></a>
-            <a className="button button-secondary" href="https://github.com/JeremyDemers" target="_blank" rel="noreferrer">View GitHub <span aria-hidden="true">↗</span></a>
+            <a className="button button-secondary" href="https://github.com/JeremyDemers" target="_blank" rel="noreferrer noopener">View GitHub <span aria-hidden="true">↗</span></a>
           </div>
         </div>
         <div className="hero-console" aria-label="A summary of Jeremy's engineering focus">
@@ -95,7 +95,7 @@ export default function Home() {
             designing the API, modeling the data, and making deployment repeatable. I care about
             clear code, useful documentation, and software that feels considered when someone uses it.
           </p>
-          <a className="text-link" href="https://github.com/JeremyDemers" target="_blank" rel="noreferrer">See how I build on GitHub <span aria-hidden="true">↗</span></a>
+          <a className="text-link" href="https://github.com/JeremyDemers" target="_blank" rel="noreferrer noopener">See how I build on GitHub <span aria-hidden="true">↗</span></a>
         </div>
       </section>
     </main>
