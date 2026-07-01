@@ -14,6 +14,8 @@ type Message = {
   isError?: boolean;
 };
 
+type ApiStatus = "checking" | "online" | "offline";
+
 const suggestions = [
   "Which projects best show Jeremy's strengths?",
   "What kind of AI work has Jeremy done?",
@@ -28,13 +30,81 @@ export function DigitalTwinExperience() {
   const [input, setInput] = useState("");
   const [sessionId, setSessionId] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [apiStatus, setApiStatus] = useState<ApiStatus>("checking");
   const [showArchitecture, setShowArchitecture] = useState(false);
   const endRef = useRef<HTMLDivElement>(null);
+  const architectureTriggerRef = useRef<HTMLButtonElement>(null);
+  const architectureDialogRef = useRef<HTMLElement>(null);
+  const architectureCloseRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), 8000);
+    let isActive = true;
+
+    async function checkApi() {
+      try {
+        const response = await fetch(`${API_BASE}/health`, { signal: controller.signal });
+        if (isActive) setApiStatus(response.ok ? "online" : "offline");
+      } catch {
+        if (isActive) setApiStatus("offline");
+      } finally {
+        window.clearTimeout(timeout);
+      }
+    }
+
+    void checkApi();
+    return () => {
+      isActive = false;
+      window.clearTimeout(timeout);
+      controller.abort();
+    };
+  }, []);
 
   useEffect(() => {
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     endRef.current?.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth" });
   }, [messages, isLoading]);
+
+  useEffect(() => {
+    if (!showArchitecture) return;
+
+    const architectureTrigger = architectureTriggerRef.current;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    architectureCloseRef.current?.focus();
+
+    function handleDialogKeyDown(event: globalThis.KeyboardEvent) {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        setShowArchitecture(false);
+        return;
+      }
+
+      if (event.key !== "Tab" || !architectureDialogRef.current) return;
+      const focusable = architectureDialogRef.current.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])',
+      );
+      if (!focusable.length) return;
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    }
+
+    document.addEventListener("keydown", handleDialogKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleDialogKeyDown);
+      document.body.style.overflow = previousOverflow;
+      architectureTrigger?.focus();
+    };
+  }, [showArchitecture]);
 
   async function sendMessage(prompt?: string) {
     const content = (prompt ?? input).trim();
@@ -54,6 +124,7 @@ export function DigitalTwinExperience() {
 
       if (!response.ok) throw new Error(`Chat request failed with ${response.status}`);
       const data = (await response.json()) as { response: string; session_id: string };
+      setApiStatus("online");
       if (!sessionId) setSessionId(data.session_id);
       setMessages((current) => [
         ...current,
@@ -61,12 +132,13 @@ export function DigitalTwinExperience() {
       ]);
     } catch (error) {
       console.error(error);
+      setApiStatus("offline");
       setMessages((current) => [
         ...current,
         {
           id: crypto.randomUUID(),
           role: "assistant",
-          content: "The digital twin API is offline right now. The interface is ready, but its AWS backend needs to be running to answer questions.",
+          content: "The digital twin API is unavailable right now. Please try again later or view the source to explore how it works.",
           isError: true,
         },
       ]);
@@ -89,18 +161,19 @@ export function DigitalTwinExperience() {
 
   return (
     <main className="twin-experience">
-      <section className="twin-page-heading shell">
-        <div>
-          <Link className="back-link" href="/#work">← All projects</Link>
-          <p className="eyebrow">Generative AI on AWS</p>
-          <h1>Meet my <em>digital twin.</em></h1>
-          <p>Ask about my experience, projects, approach to engineering, or working style.</p>
-        </div>
-        <div className="twin-heading-actions">
-          <button type="button" onClick={() => setShowArchitecture(true)}><Network size={17} /> Architecture</button>
-          <a href="https://github.com/JeremyDemers/digital-twin" target="_blank" rel="noreferrer noopener"><Github size={17} /> Source</a>
-        </div>
-      </section>
+      <div inert={showArchitecture ? true : undefined} aria-hidden={showArchitecture || undefined}>
+        <section className="twin-page-heading shell">
+          <div>
+            <Link className="back-link" href="/#work">← All projects</Link>
+            <p className="eyebrow">Generative AI on AWS</p>
+            <h1>Meet my <em>digital twin.</em></h1>
+            <p>Ask about my experience, projects, approach to engineering, or working style.</p>
+          </div>
+          <div className="twin-heading-actions">
+            <button ref={architectureTriggerRef} type="button" onClick={() => setShowArchitecture(true)}><Network size={17} aria-hidden="true" /> Architecture</button>
+            <a href="https://github.com/JeremyDemers/digital-twin" target="_blank" rel="noreferrer noopener"><Github size={17} aria-hidden="true" /> Source</a>
+          </div>
+        </section>
 
       <section className="twin-chat shell" aria-label="Conversation with Jeremy's digital twin">
         <div className="twin-chat-bar">
@@ -111,7 +184,9 @@ export function DigitalTwinExperience() {
             </span>
             <div><strong>Jeremy&apos;s Digital Twin</strong><span>AI representation · Amazon Bedrock</span></div>
           </div>
-          <span className="twin-status"><i /> Ready to chat</span>
+          <span className={`twin-status ${apiStatus}`} role="status" aria-live="polite">
+            <i /> {apiStatus === "checking" ? "Checking service" : apiStatus === "online" ? "Ready to chat" : "Service unavailable"}
+          </span>
         </div>
 
         <div className="twin-message-list" role="log" aria-live="polite" aria-busy={isLoading}>
@@ -159,19 +234,28 @@ export function DigitalTwinExperience() {
             placeholder="Ask about Jeremy's work…"
             rows={1}
             maxLength={2000}
+            name="message"
+            autoComplete="off"
             aria-label="Message"
           />
           <button type="submit" disabled={!input.trim() || isLoading} aria-label="Send message"><Send /></button>
           <p>Enter to send · Shift+Enter for a new line</p>
         </form>
-      </section>
+        </section>
+      </div>
 
       {showArchitecture ? (
-        <div className="architecture-backdrop" role="presentation" onMouseDown={() => setShowArchitecture(false)}>
-          <section className="architecture-dialog" role="dialog" aria-modal="true" aria-labelledby="architecture-title" onMouseDown={(event) => event.stopPropagation()}>
+        <div
+          className="architecture-backdrop"
+          role="presentation"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) setShowArchitecture(false);
+          }}
+        >
+          <section ref={architectureDialogRef} className="architecture-dialog" role="dialog" aria-modal="true" aria-labelledby="architecture-title">
             <div className="architecture-dialog-heading">
               <div><p className="section-kicker">Under the hood</p><h2 id="architecture-title">Serverless by design.</h2></div>
-              <button type="button" onClick={() => setShowArchitecture(false)} aria-label="Close architecture"><X /></button>
+              <button ref={architectureCloseRef} type="button" onClick={() => setShowArchitecture(false)} aria-label="Close architecture"><X aria-hidden="true" /></button>
             </div>
             <div className="twin-architecture-flow">
               <div><span>01</span><strong>Next.js</strong><small>Static client</small></div><i>→</i>
@@ -186,4 +270,3 @@ export function DigitalTwinExperience() {
     </main>
   );
 }
-

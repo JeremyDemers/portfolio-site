@@ -422,7 +422,7 @@ export function NeonShatterGame() {
   const topLabel = view.status === "playing" ? "Pause" : view.status === "paused" ? "Resume" : "Play";
 
   return (
-    <main className="shell">
+    <div className="shell">
       <header className="topbar">
         <div className="brand-lockup">
           <div className="brand-mark"><Sparkles size={21} /></div>
@@ -517,6 +517,7 @@ export function NeonShatterGame() {
           <div className="mobile-controls">
             <button
               type="button"
+              aria-label="Move left"
               onPointerDown={() => { inputRef.current.left = true; inputRef.current.targetX = null; }}
               onPointerUp={() => { inputRef.current.left = false; }}
               onPointerLeave={() => { inputRef.current.left = false; }}
@@ -524,6 +525,7 @@ export function NeonShatterGame() {
             <button className="launch-button" type="button" onClick={launch}><Rocket size={18} /> Launch</button>
             <button
               type="button"
+              aria-label="Move right"
               onPointerDown={() => { inputRef.current.right = true; inputRef.current.targetX = null; }}
               onPointerUp={() => { inputRef.current.right = false; }}
               onPointerLeave={() => { inputRef.current.right = false; }}
@@ -574,6 +576,6 @@ export function NeonShatterGame() {
           )) : <p className="empty-state">No signals yet. Yours could be the first one through.</p>}
         </div>
       </section>
-    </main>
+    </div>
   );
 }

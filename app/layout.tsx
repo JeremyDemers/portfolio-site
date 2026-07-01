@@ -26,7 +26,7 @@ export const metadata: Metadata = {
         url: "/images/portfolio-site-social-preview.jpg",
         width: 1280,
         height: 640,
-        alt: "Jeremy Demers — full-stack developer, AWS builder, and creative technologist",
+        alt: "Jeremy Demers, full-stack developer, AWS builder, and creative technologist",
       },
     ],
   },
