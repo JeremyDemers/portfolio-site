@@ -106,12 +106,13 @@ button, textarea, input { font: inherit; }
 .project-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; }
 .project-card { overflow: hidden; border: 1px solid var(--line); background: rgba(15,22,36,.72); transition: border-color .25s ease; }
 .project-card:hover, .project-card:focus-within { border-color: rgba(129,247,216,.28); }
-.project-card-twin, .project-card-api, .project-card-lle { grid-column: 1 / -1; display: grid; grid-template-columns: 1.08fr .92fr; }
+.project-card-twin, .project-card-api, .project-card-lle, .project-card-finance { grid-column: 1 / -1; display: grid; grid-template-columns: 1.08fr .92fr; }
 .project-card-api { grid-template-columns: .92fr 1.08fr; }
 .project-card-lle { grid-template-columns: 1.18fr .82fr; }
-.project-card-twin .project-visual, .project-card-api .project-visual, .project-card-lle .project-visual { min-height: 410px; }
+.project-card-finance { grid-template-columns: 1.18fr .82fr; }
+.project-card-twin .project-visual, .project-card-api .project-visual, .project-card-lle .project-visual, .project-card-finance .project-visual { min-height: 410px; }
 .project-card-copy { padding: 31px; }
-.project-card-twin .project-card-copy, .project-card-api .project-card-copy, .project-card-lle .project-card-copy { display: flex; flex-direction: column; justify-content: center; padding: 54px; }
+.project-card-twin .project-card-copy, .project-card-api .project-card-copy, .project-card-lle .project-card-copy, .project-card-finance .project-card-copy { display: flex; flex-direction: column; justify-content: center; padding: 54px; }
 .project-number { margin-bottom: 14px; color: var(--dim); font: 500 .65rem var(--font-mono); letter-spacing: .07em; text-transform: uppercase; }
 .project-card h3 { margin: 0 0 12px; font-size: 1.8rem; letter-spacing: -.04em; }
 .project-card p { max-width: 580px; margin: 0; color: var(--muted); }
@@ -125,7 +126,7 @@ button, textarea, input { font: inherit; }
 .project-link:hover, .text-link:hover { color: #b2ffea; border-color: currentColor; }
 
 .project-visual { position: relative; min-height: 360px; overflow: hidden; border-bottom: 1px solid var(--line); background-color: #0a111d; }
-.project-card-twin .project-visual, .project-card-api .project-visual, .project-card-lle .project-visual { border: 0; border-right: 1px solid var(--line); }
+.project-card-twin .project-visual, .project-card-api .project-visual, .project-card-lle .project-visual, .project-card-finance .project-visual { border: 0; border-right: 1px solid var(--line); }
 .visual-label { position: absolute; right: 18px; bottom: 15px; color: rgba(218,231,242,.36); font: 500 .6rem var(--font-mono); letter-spacing: .1em; }
 .visual-tetris { background: radial-gradient(circle at 48% 55%, rgba(57,180,166,.14), transparent 52%), #09111c; }
 .tetris-grid { position: absolute; inset: 35px 25%; display: grid; grid-template-columns: repeat(8, 1fr); grid-template-rows: repeat(5, 1fr); opacity: .22; }
@@ -174,6 +175,12 @@ button, textarea, input { font: inherit; }
 .lle-scan-line { position: absolute; z-index: 2; top: 0; bottom: 0; left: 67%; width: 1px; background: linear-gradient(transparent, rgba(129,247,216,.7), transparent); box-shadow: 0 0 18px rgba(129,247,216,.4); animation: lle-scan 4s ease-in-out infinite alternate; }
 .visual-lle .visual-label { z-index: 3; color: rgba(218,231,242,.58); }
 @keyframes lle-scan { from { transform: translateX(-85px); opacity: .35; } to { transform: translateX(55px); opacity: .85; } }
+.visual-finance { isolation: isolate; background: #030d16; }
+.finance-visual-image { object-fit: cover; object-position: center; filter: saturate(.8) contrast(1.04) brightness(.7); transform: scale(1.015); }
+.finance-visual-shade { position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(2,8,14,.05) 45%, rgba(2,8,14,.9)), linear-gradient(90deg, transparent 58%, rgba(2,8,14,.42)); }
+.finance-agent-strip { position: absolute; z-index: 2; right: 24px; bottom: 40px; left: 24px; display: flex; align-items: center; gap: 9px; color: rgba(218,231,242,.72); font: 600 .54rem var(--font-mono); letter-spacing: .06em; text-transform: uppercase; }
+.finance-agent-strip i { height: 1px; flex: 1; background: linear-gradient(90deg, rgba(52,207,244,.18), rgba(255,202,128,.58)); }
+.visual-finance .visual-label { z-index: 3; color: rgba(218,231,242,.58); }
 
 .capabilities-section { padding-block: 120px; border-block: 1px solid var(--line); background: rgba(12,18,30,.72); }
 .compact-heading { margin-bottom: 45px; }
@@ -308,9 +315,9 @@ button, textarea, input { font: inherit; }
   .hero, .project-hero { grid-template-columns: 1fr; gap: 65px; }
   .hero { padding-block: 85px; }
   .project-grid { grid-template-columns: 1fr; }
-  .project-card-twin, .project-card-api, .project-card-lle { grid-column: auto; display: block; }
-  .project-card-twin .project-visual, .project-card-api .project-visual, .project-card-lle .project-visual { min-height: 360px; border-right: 0; border-bottom: 1px solid var(--line); }
-  .project-card-twin .project-card-copy, .project-card-api .project-card-copy, .project-card-lle .project-card-copy { padding: 31px; }
+  .project-card-twin, .project-card-api, .project-card-lle, .project-card-finance { grid-column: auto; display: block; }
+  .project-card-twin .project-visual, .project-card-api .project-visual, .project-card-lle .project-visual, .project-card-finance .project-visual { min-height: 360px; border-right: 0; border-bottom: 1px solid var(--line); }
+  .project-card-twin .project-card-copy, .project-card-api .project-card-copy, .project-card-lle .project-card-copy, .project-card-finance .project-card-copy { padding: 31px; }
   .capability-grid { grid-template-columns: 1fr; }
   .capability, .capability:first-child { min-height: 230px; grid-row: auto; }
   .capability h3 { margin-top: 45px; }
@@ -335,7 +342,8 @@ button, textarea, input { font: inherit; }
   .section-heading { display: block; }
   .section-heading > p { margin-top: 24px; }
   .work-section, .capabilities-section { padding-block: 85px; }
-  .project-visual, .project-card-twin .project-visual, .project-card-api .project-visual, .project-card-lle .project-visual { min-height: 285px; }
+  .project-visual, .project-card-twin .project-visual, .project-card-api .project-visual, .project-card-lle .project-visual, .project-card-finance .project-visual { min-height: 285px; }
+  .finance-agent-strip { right: 15px; left: 15px; gap: 5px; font-size: .46rem; }
   .tetris-grid { inset-inline: 16%; }
   .tetromino-one { left: 20%; }
   .tetromino-two { right: 18%; }

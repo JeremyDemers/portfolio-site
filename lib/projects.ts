@@ -1,5 +1,5 @@
 export type Project = {
-  slug: "tetris" | "neon-shatter" | "digital-twin" | "lle-analysis" | "empower-api";
+  slug: "tetris" | "neon-shatter" | "digital-twin" | "lle-analysis" | "empower-api" | "financial-advisor";
   name: string;
   eyebrow: string;
   summary: string;
@@ -7,7 +7,7 @@ export type Project = {
   href: string;
   source: string;
   video?: string;
-  visual: "tetris" | "shatter" | "twin" | "lle" | "api";
+  visual: "tetris" | "shatter" | "twin" | "lle" | "api" | "finance";
   external?: boolean;
   tech: string[];
   highlights: string[];
@@ -15,6 +15,31 @@ export type Project = {
 };
 
 export const projects: Project[] = [
+  {
+    slug: "financial-advisor",
+    name: "jd Financial Advisor",
+    eyebrow: "Multi-agent financial intelligence",
+    summary:
+      "A production-oriented financial planning platform where five specialized AI agents collaborate on portfolio reports, charts, classification, and retirement projections.",
+    description:
+      "jd Financial Advisor combines a Next.js product interface with FastAPI services and a five-agent analysis workflow. AWS Lambda, SQS, Aurora Serverless, S3 vector search, SageMaker embeddings, and Amazon Bedrock support asynchronous planning with authenticated, per-user portfolio data.",
+    href: "https://github.com/JeremyDemers/jd_financial_advisor",
+    source: "https://github.com/JeremyDemers/jd_financial_advisor",
+    visual: "finance",
+    external: true,
+    tech: ["Next.js", "FastAPI", "Amazon Bedrock", "AWS Lambda", "Aurora", "Terraform"],
+    highlights: [
+      "Five specialized agents orchestrate portfolio analysis, reporting, charting, classification, and retirement planning",
+      "Asynchronous analysis jobs run through AWS Lambda and SQS",
+      "Aurora Serverless and Clerk provide persistent, per-user portfolio data",
+      "S3 vector search, SageMaker embeddings, and CloudWatch support retrieval and observability",
+    ],
+    architecture: [
+      "Next.js, CloudFront, and Clerk authentication",
+      "API Gateway, FastAPI Lambda, SQS, and five analysis agents",
+      "Amazon Bedrock, SageMaker, S3 Vectors, and Aurora Serverless",
+    ],
+  },
   {
     slug: "tetris",
     name: "Tetris",
