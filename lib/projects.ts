@@ -1,12 +1,13 @@
 export type Project = {
-  slug: "tetris" | "neon-shatter" | "digital-twin" | "empower-api";
+  slug: "tetris" | "neon-shatter" | "digital-twin" | "lle-analysis" | "empower-api";
   name: string;
   eyebrow: string;
   summary: string;
   description: string;
   href: string;
   source: string;
-  visual: "tetris" | "shatter" | "twin" | "api";
+  video?: string;
+  visual: "tetris" | "shatter" | "twin" | "lle" | "api";
   external?: boolean;
   tech: string[];
   highlights: string[];
@@ -73,6 +74,32 @@ export const projects: Project[] = [
       "Fully described serverless infrastructure managed with Terraform",
     ],
     architecture: ["CloudFront and static Next.js export", "API Gateway and Lambda", "Amazon Bedrock and private S3 memory"],
+  },
+  {
+    slug: "lle-analysis",
+    name: "LLE Vial Analysis",
+    eyebrow: "Computer vision & lab automation",
+    summary:
+      "A hardware-integrated vision system that captures extraction vials, identifies liquid layers and menisci, estimates volumes, and generates laboratory reports.",
+    description:
+      "LLE Vial Analysis combines a custom camera and lighting assembly with a trained PyTorch detector and a Flask control interface. The system follows a 48-position plate workflow, measures liquid-liquid extraction layers, flags unsuitable samples, and turns each run into annotated images, Excel reports, and structured data.",
+    href: "https://github.com/JeremyDemers/LLE-Analysis",
+    source: "https://github.com/JeremyDemers/LLE-Analysis",
+    video: "https://youtu.be/jF45N3MsKkI",
+    visual: "lle",
+    external: true,
+    tech: ["Python", "PyTorch", "OpenCV", "Flask", "Socket.IO", "SQLite"],
+    highlights: [
+      "Custom-trained object detection for vials, liquid layers, menisci, residue, and rag layers",
+      "Motion-aware image capture integrated with a 48-position laboratory workflow",
+      "Pixel-to-volume calculations, annotated images, and generated Excel reports",
+      "Custom 3D-printed camera mount and controlled lighting for repeatable inspection",
+    ],
+    architecture: [
+      "Camera, lighting, and motion-aware capture",
+      "PyTorch detection and OpenCV measurement pipeline",
+      "Flask interface, Socket.IO progress, Excel, email, and SQLite outputs",
+    ],
   },
   {
     slug: "empower-api",

@@ -19,7 +19,7 @@ export default function Home() {
           <h1>I build software people can <em>experience.</em></h1>
           <p className="hero-lede">
             I&apos;m Jeremy Demers—a developer building interactive web applications,
-            generative AI experiences, and serverless systems on AWS.
+            computer-vision systems, generative AI experiences, and serverless systems on AWS.
           </p>
           <div className="hero-actions">
             <a className="button button-primary" href="#work">Explore my work <ArrowDownRight size={17} /></a>
@@ -47,7 +47,7 @@ export default function Home() {
             <p className="section-kicker">Selected work</p>
             <h2>Projects made to be used.</h2>
           </div>
-          <p>Each project explores a different edge of modern application development—from real-time interaction and data APIs to cloud-native AI.</p>
+          <p>Each project explores a different edge of modern engineering—from real-time interaction and laboratory computer vision to data APIs and cloud-native AI.</p>
         </div>
 
         <div className="project-grid">
@@ -61,13 +61,20 @@ export default function Home() {
                 <div className="tag-list">
                   {project.tech.slice(0, 4).map((technology) => <span key={technology}>{technology}</span>)}
                 </div>
-                {project.external ? (
-                  <a className="project-link" href={project.href} target="_blank" rel="noreferrer noopener">
-                    View source <span aria-hidden="true">↗</span>
-                  </a>
-                ) : (
-                  <Link className="project-link" href={project.href}>View project <span aria-hidden="true">↗</span></Link>
-                )}
+                <div className="project-links">
+                  {project.external ? (
+                    <a className="project-link" href={project.href} target="_blank" rel="noreferrer noopener">
+                      View source <span aria-hidden="true">↗</span>
+                    </a>
+                  ) : (
+                    <Link className="project-link" href={project.href}>View project <span aria-hidden="true">↗</span></Link>
+                  )}
+                  {project.video && (
+                    <a className="project-link" href={project.video} target="_blank" rel="noreferrer noopener">
+                      Watch video <span aria-hidden="true">↗</span>
+                    </a>
+                  )}
+                </div>
               </div>
             </article>
           ))}
