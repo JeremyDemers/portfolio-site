@@ -1,4 +1,5 @@
 import type { Project } from "@/lib/projects";
+import Image from "next/image";
 
 export function ProjectVisual({ variant, compact = false }: { variant: Project["visual"]; compact?: boolean }) {
   if (variant === "tetris") {
@@ -40,6 +41,23 @@ export function ProjectVisual({ variant, compact = false }: { variant: Project["
           <span>EMPOWER 3</span><i>→</i><span>ASP.NET 8</span><i>→</i><span>JSON</span>
         </div>
         <div className="visual-label">C# / ORACLE</div>
+      </div>
+    );
+  }
+
+  if (variant === "lle") {
+    return (
+      <div className={`project-visual visual-lle ${compact ? "compact" : ""}`} aria-hidden="true">
+        <Image
+          src="/images/lle-analysis-processing.webp"
+          alt=""
+          fill
+          sizes={compact ? "(max-width: 980px) 100vw, 55vw" : "50vw"}
+          className="lle-visual-image"
+        />
+        <div className="lle-scan-line" />
+        <div className="lle-visual-shade" />
+        <div className="visual-label">PYTORCH / OPENCV / AUTOMATION</div>
       </div>
     );
   }
