@@ -648,7 +648,7 @@ export function TetrisGame() {
   const primaryLabel = game.status === "playing" ? "Pause" : game.status === "paused" ? "Resume" : "Play";
 
   return (
-    <main className="shell">
+    <div className="shell">
       <section className="topbar">
         <div className="brand-lockup">
           <div className="brand-icon" aria-hidden="true">
@@ -660,7 +660,7 @@ export function TetrisGame() {
           </div>
         </div>
         <div className="top-actions">
-          <div className={`status-pill ${game.status}`}>
+          <div className={`status-pill ${game.status}`} role="status" aria-live="polite">
             <i />
             <span>{game.status === "gameOver" ? "Game over" : game.status}</span>
           </div>
@@ -798,12 +798,12 @@ export function TetrisGame() {
           </div>
 
           <div className="controls">
-            <button type="button" onClick={() => { move(-1); playSound("move"); }} title="Move left">←</button>
-            <button type="button" onClick={() => { rotateActive(); playSound("rotate"); }} title="Rotate">
+            <button type="button" onClick={() => { move(-1); playSound("move"); }} title="Move left" aria-label="Move left">←</button>
+            <button type="button" onClick={() => { rotateActive(); playSound("rotate"); }} title="Rotate" aria-label="Rotate piece">
               <RotateCw size={18} />
             </button>
-            <button type="button" onClick={() => { move(1); playSound("move"); }} title="Move right">→</button>
-            <button type="button" onClick={() => { softDrop(); playSound("drop"); }} title="Soft drop">↓</button>
+            <button type="button" onClick={() => { move(1); playSound("move"); }} title="Move right" aria-label="Move right">→</button>
+            <button type="button" onClick={() => { softDrop(); playSound("drop"); }} title="Soft drop" aria-label="Soft drop">↓</button>
             <button type="button" onClick={() => { hardDrop(); playSound("drop"); }} title="Hard drop">Drop</button>
             <button type="button" onClick={hold} title="Hold piece">Hold</button>
           </div>
@@ -857,7 +857,7 @@ export function TetrisGame() {
           )}
         </div>
       </section>
-    </main>
+    </div>
   );
 }
 

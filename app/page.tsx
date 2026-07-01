@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowDownRight, Cloud, Code2, Gamepad2, Sparkles } from "lucide-react";
+import { ArrowDownRight, Cloud, Code2, Gamepad2, Github, Linkedin, Sparkles } from "lucide-react";
 import { ProjectVisual } from "@/components/ProjectVisual";
 import { projects } from "@/lib/projects";
 
@@ -9,21 +9,25 @@ const capabilities = [
   { icon: Gamepad2, title: "Interactive engineering", text: "Responsive game loops, canvas rendering, keyboard and touch input, audio, animation, and careful interface feedback." },
 ];
 
+const projectPriority = ["lle-analysis", "digital-twin", "empower-api", "tetris", "neon-shatter"];
+const featuredProjects = [...projects].sort(
+  (first, second) => projectPriority.indexOf(first.slug) - projectPriority.indexOf(second.slug),
+);
+
 export default function Home() {
   return (
     <main>
       <section className="hero shell">
         <div className="hero-copy">
           <div className="availability"><span /> Open to programming opportunities</div>
-          <p className="eyebrow">Full-stack developer · AWS builder · Creative technologist</p>
           <h1>I build software people can <em>experience.</em></h1>
           <p className="hero-lede">
-            I&apos;m Jeremy Demers—a developer building interactive web applications,
-            computer-vision systems, generative AI experiences, and serverless systems on AWS.
+            Interactive web applications, computer-vision systems, generative AI experiences,
+            and serverless products on AWS.
           </p>
           <div className="hero-actions">
-            <a className="button button-primary" href="#work">Explore my work <ArrowDownRight size={17} /></a>
-            <a className="button button-secondary" href="https://github.com/JeremyDemers" target="_blank" rel="noreferrer noopener">View GitHub <span aria-hidden="true">↗</span></a>
+            <a className="button button-primary" href="#work">View work <ArrowDownRight size={17} aria-hidden="true" /></a>
+            <a className="button button-secondary" href="#contact">Contact</a>
           </div>
         </div>
         <div className="hero-console" aria-label="A summary of Jeremy's engineering focus">
@@ -47,17 +51,18 @@ export default function Home() {
             <p className="section-kicker">Selected work</p>
             <h2>Projects made to be used.</h2>
           </div>
-          <p>Each project explores a different edge of modern engineering—from real-time interaction and laboratory computer vision to data APIs and cloud-native AI.</p>
+          <p>Production-minded work across laboratory computer vision, cloud-native AI, enterprise APIs, and real-time interaction.</p>
         </div>
 
         <div className="project-grid">
-          {projects.map((project, index) => (
+          {featuredProjects.map((project, index) => (
             <article className={`project-card project-card-${project.visual}`} key={project.slug}>
               <ProjectVisual variant={project.visual} compact />
               <div className="project-card-copy">
                 <div className="project-number">0{index + 1} / {project.eyebrow}</div>
                 <h3>{project.name}</h3>
                 <p>{project.summary}</p>
+                <p className="project-proof"><strong>Engineering proof</strong>{project.highlights[0]}</p>
                 <div className="tag-list">
                   {project.tech.slice(0, 4).map((technology) => <span key={technology}>{technology}</span>)}
                 </div>
@@ -98,7 +103,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="about-section shell">
+      <section className="about-section shell" id="about">
         <div className="about-signal" aria-hidden="true"><Sparkles /><span>BUILD<br />LEARN<br />REFINE</span></div>
         <div className="about-copy">
           <p className="section-kicker">About</p>
@@ -109,6 +114,24 @@ export default function Home() {
             clear code, useful documentation, and software that feels considered when someone uses it.
           </p>
           <a className="text-link" href="https://github.com/JeremyDemers" target="_blank" rel="noreferrer noopener">See how I build on GitHub <span aria-hidden="true">↗</span></a>
+        </div>
+      </section>
+
+      <section className="contact-section" id="contact">
+        <div className="shell contact-inner">
+          <div>
+            <p className="section-kicker">Contact</p>
+            <h2>Have a role or a hard problem in mind?</h2>
+            <p>I&apos;m open to full-stack, cloud, AI, and interactive engineering opportunities. LinkedIn is the quickest way to reach me.</p>
+          </div>
+          <div className="contact-actions">
+            <a className="button button-primary" href="https://www.linkedin.com/in/jeremy-demers/" target="_blank" rel="noreferrer noopener">
+              <Linkedin size={17} aria-hidden="true" /> Contact
+            </a>
+            <a className="button button-secondary" href="https://github.com/JeremyDemers" target="_blank" rel="noreferrer noopener">
+              <Github size={17} aria-hidden="true" /> GitHub
+            </a>
+          </div>
         </div>
       </section>
     </main>
