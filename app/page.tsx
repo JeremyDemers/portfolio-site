@@ -9,7 +9,7 @@ const capabilities = [
   { icon: Gamepad2, title: "Interactive engineering", text: "Responsive game loops, canvas rendering, keyboard and touch input, audio, animation, and careful interface feedback." },
 ];
 
-const projectPriority = ["lle-analysis", "digital-twin", "empower-api", "tetris", "neon-shatter"];
+const projectPriority = ["financial-advisor", "lle-analysis", "digital-twin", "empower-api", "tetris", "neon-shatter"];
 const featuredProjects = [...projects].sort(
   (first, second) => projectPriority.indexOf(first.slug) - projectPriority.indexOf(second.slug),
 );
@@ -22,7 +22,7 @@ export default function Home() {
           <div className="availability"><span /> Open to programming opportunities</div>
           <h1>I build software people can <em>experience.</em></h1>
           <p className="hero-lede">
-            Interactive web applications, computer-vision systems, generative AI experiences,
+            Interactive web applications, multi-agent AI, computer-vision systems,
             and serverless products on AWS.
           </p>
           <div className="hero-actions">
@@ -51,7 +51,7 @@ export default function Home() {
             <p className="section-kicker">Selected work</p>
             <h2>Projects made to be used.</h2>
           </div>
-          <p>Production-minded work across laboratory computer vision, cloud-native AI, enterprise APIs, and real-time interaction.</p>
+          <p>Production-minded work across multi-agent AI, laboratory computer vision, enterprise APIs, and real-time interaction.</p>
         </div>
 
         <div className="project-grid">

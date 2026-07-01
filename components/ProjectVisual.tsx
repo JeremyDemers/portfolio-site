@@ -62,6 +62,30 @@ export function ProjectVisual({ variant, compact = false }: { variant: Project["
     );
   }
 
+  if (variant === "finance") {
+    return (
+      <div className={`project-visual visual-finance ${compact ? "compact" : ""}`} aria-hidden="true">
+        <Image
+          src="/images/jd-financial-advisor.webp"
+          alt=""
+          fill
+          priority={compact}
+          sizes={compact ? "(max-width: 980px) 100vw, 55vw" : "50vw"}
+          className="finance-visual-image"
+        />
+        <div className="finance-visual-shade" />
+        <div className="finance-agent-strip">
+          <span>Planner</span><i />
+          <span>Reporter</span><i />
+          <span>Charter</span><i />
+          <span>Retirement</span><i />
+          <span>Tagger</span>
+        </div>
+        <div className="visual-label">5 AGENTS / AWS / BEDROCK</div>
+      </div>
+    );
+  }
+
   return (
     <div className={`project-visual visual-twin ${compact ? "compact" : ""}`} aria-hidden="true">
       <div className="twin-orbit orbit-one" />
