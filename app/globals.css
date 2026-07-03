@@ -220,13 +220,16 @@ button, textarea, input { font: inherit; }
 .architecture-list li span { color: var(--mint); font: .7rem var(--font-mono); }
 
 .integrated-game-page { min-height: calc(100vh - 72px); background: #05070c; }
-.game-page-banner { min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-block: 14px; }
-.game-page-banner > div { display: flex; align-items: center; gap: 25px; }
-.game-breadcrumb { color: var(--ink); font: 650 .72rem var(--font-mono); letter-spacing: .07em; text-transform: uppercase; white-space: nowrap; }
-.game-page-banner p { display: flex; align-items: center; gap: 8px; margin: 0; color: var(--muted); font-size: .76rem; }
-.game-page-banner p svg { color: var(--mint); flex: 0 0 auto; }
-.game-page-banner > a { display: inline-flex; align-items: center; gap: 8px; color: var(--mint); font: 600 .68rem var(--font-mono); text-transform: uppercase; letter-spacing: .06em; white-space: nowrap; }
-.embedded-game-host { display: block; min-height: 900px; border-top: 1px solid var(--line); }
+.game-page-banner { min-height: 190px; display: grid; grid-template-columns: 1fr minmax(280px,.55fr); align-items: end; gap: 55px; padding-block: 30px; }
+.game-page-copy h1 { margin: 11px 0 0; font-size: clamp(2.25rem,4.5vw,4.5rem); line-height: .95; letter-spacing: -.06em; }
+.game-page-copy > p { max-width: 720px; margin: 15px 0 0; color: var(--muted); font-size: .93rem; }
+.game-breadcrumb { color: var(--mint); font: 650 .75rem var(--font-mono); letter-spacing: .07em; text-transform: uppercase; }
+.game-page-actions { display: grid; justify-items: start; gap: 16px; padding-bottom: 3px; }
+.game-page-actions p { display: flex; align-items: flex-start; gap: 8px; margin: 0; color: var(--muted); font-size: .8rem; line-height: 1.55; }
+.game-page-actions p svg { margin-top: 2px; color: var(--mint); flex: 0 0 auto; }
+.game-page-actions > a { display: inline-flex; align-items: center; gap: 8px; color: var(--mint); font: 600 .75rem var(--font-mono); text-transform: uppercase; letter-spacing: .06em; white-space: nowrap; }
+.embedded-game-host { display: block; min-height: 1350px; border-top: 1px solid var(--line); }
+.embedded-game-host.game-host-neon-shatter { min-height: 1220px; }
 .game-loading { padding: 50px; color: var(--muted); text-align: center; }
 
 .twin-experience { min-height: calc(100vh - 72px); padding-bottom: 120px; background: radial-gradient(circle at 75% 8%, rgba(169,156,255,.11), transparent 34rem); }
@@ -305,7 +308,7 @@ button, textarea, input { font: inherit; }
 .footer-inner { min-height: 170px; display: flex; align-items: center; justify-content: space-between; }
 .footer-inner > div:first-child { display: flex; align-items: center; gap: 17px; }
 .footer-inner p { color: var(--dim); font-size: .75rem; }
-.footer-links { display: flex; gap: 28px; color: #8c9caf; font: .7rem var(--font-mono); text-transform: uppercase; }
+.footer-links { display: flex; gap: 28px; color: #8c9caf; font: .75rem var(--font-mono); text-transform: uppercase; }
 .footer-links a:hover { color: var(--mint); }
 
 @media (max-width: 980px) {
@@ -332,7 +335,7 @@ button, textarea, input { font: inherit; }
   :root { --shell: min(100% - 28px, 540px); }
   .header-inner { min-height: 68px; }
   .brand > span:last-child { display: none; }
-  .main-nav { width: 100%; justify-content: flex-end; gap: 3px; font-size: .72rem; }
+  .main-nav { width: 100%; justify-content: flex-end; gap: 3px; font-size: .75rem; }
   .main-nav a { padding-inline: 9px; }
   .hero { min-height: auto; padding-block: 68px 90px; }
   .hero h1 { font-size: clamp(3.25rem, 16vw, 4.6rem); }
@@ -359,11 +362,12 @@ button, textarea, input { font: inherit; }
   .project-hero { padding-block: 60px 80px; }
   .project-hero .project-visual { min-height: 330px; }
   .project-body { padding-block: 85px; }
-  .game-page-banner { align-items: flex-start; padding-block: 18px; }
-  .game-page-banner > div { display: block; }
-  .game-page-banner p { margin-top: 7px; font-size: .67rem; line-height: 1.45; }
-  .game-page-banner > a { padding-top: 3px; }
-  .embedded-game-host { min-height: 1100px; }
+  .game-page-banner { grid-template-columns: 1fr; align-items: start; gap: 22px; padding-block: 28px; }
+  .game-page-copy h1 { font-size: clamp(2.5rem,13vw,4rem); }
+  .game-page-copy > p { font-size: .88rem; }
+  .game-page-actions { gap: 12px; }
+  .embedded-game-host.game-host-tetris { min-height: 1800px; }
+  .embedded-game-host.game-host-neon-shatter { min-height: 1700px; }
   .twin-experience { padding-bottom: 80px; }
   .twin-page-heading { display: block; padding-block: 55px 35px; }
   .twin-page-heading h1 { font-size: clamp(3rem,15vw,4.5rem); }

@@ -5,11 +5,12 @@ import { createPortal } from "react-dom";
 
 type ShadowSurfaceProps = {
   children: ReactNode;
+  className?: string;
   label: string;
   stylesheet: string;
 };
 
-export function ShadowSurface({ children, label, stylesheet }: ShadowSurfaceProps) {
+export function ShadowSurface({ children, className = "", label, stylesheet }: ShadowSurfaceProps) {
   const hostRef = useRef<HTMLDivElement>(null);
   const [mountNode, setMountNode] = useState<HTMLDivElement | null>(null);
 
@@ -34,9 +35,8 @@ export function ShadowSurface({ children, label, stylesheet }: ShadowSurfaceProp
   }, [stylesheet]);
 
   return (
-    <div ref={hostRef} className="embedded-game-host" aria-label={label}>
+    <div ref={hostRef} className={`embedded-game-host ${className}`} aria-label={label}>
       {mountNode ? createPortal(children, mountNode) : <p className="game-loading">Loading game…</p>}
     </div>
   );
 }
-

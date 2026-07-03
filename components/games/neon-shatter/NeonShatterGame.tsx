@@ -428,7 +428,7 @@ export function NeonShatterGame() {
           <div className="brand-mark"><Sparkles size={21} /></div>
           <div>
             <p className="eyebrow">Arcade transmission 002</p>
-            <h1>Neon <span>Shatter</span></h1>
+            <div className="game-wordmark">Neon <span>Shatter</span></div>
           </div>
         </div>
         <div className="top-actions">
