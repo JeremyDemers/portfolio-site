@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Github, Linkedin } from "lucide-react";
 
 const navigation = [
+  { label: "Services", href: "/#services" },
   { label: "Work", href: "/#work" },
   { label: "About", href: "/#about" },
   { label: "Contact", href: "/#contact" },

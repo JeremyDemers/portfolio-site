@@ -14,15 +14,15 @@ const geistMono = Geist_Mono({ variable: "--font-mono", subsets: ["latin"] });
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Jeremy Demers | Full-stack & AI engineer",
+    default: "Jeremy Demers | Software & AI Consulting",
     template: "%s | Jeremy Demers",
   },
   description:
-    "Full-stack and AI engineer building multi-agent platforms, computer-vision systems, interactive applications, and serverless products on AWS.",
+    "Software and AI consultant building full-stack applications, multi-agent platforms, computer-vision systems, and serverless products on AWS.",
   alternates: { canonical: SITE_URL },
   openGraph: {
-    title: "Jeremy Demers | Full-stack & AI engineer",
-    description: "Multi-agent AI, computer vision, interactive applications, and serverless systems on AWS.",
+    title: "Jeremy Demers | Software & AI Consulting",
+    description: "Software and AI consulting for full-stack applications, multi-agent AI, computer vision, and serverless AWS systems.",
     url: SITE_URL,
     siteName: "Jeremy Demers",
     type: "website",
@@ -37,8 +37,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Jeremy Demers | Full-stack & AI engineer",
-    description: "Multi-agent AI, computer vision, interactive applications, and serverless systems on AWS.",
+    title: "Jeremy Demers | Software & AI Consulting",
+    description: "Software and AI consulting for full-stack applications, multi-agent AI, computer vision, and serverless AWS systems.",
     images: ["/images/portfolio-site-social-preview.jpg"],
   },
 };

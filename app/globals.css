@@ -101,8 +101,25 @@ button, textarea, input { font: inherit; }
 .section-heading { display: block; margin-bottom: 54px; }
 .section-heading h2, .about-copy h2, .project-body h2 { max-width: 720px; margin: 0; font-size: clamp(2.2rem, 4vw, 3.9rem); line-height: 1.08; letter-spacing: -.055em; }
 .section-heading > p { max-width: 720px; margin: 22px 0 0; color: var(--muted); }
-.hero h1, .section-heading h2, .about-copy h2, .contact-inner h2, .project-hero h1, .twin-page-heading h1, .twin-intro h2 { text-wrap: balance; }
-.hero-lede, .section-heading > p, .project-card p, .about-copy > p, .contact-inner p { text-wrap: pretty; }
+.hero h1, .section-heading h2, .services-intro h3, .about-copy h2, .contact-inner h2, .project-hero h1, .twin-page-heading h1, .twin-intro h2 { text-wrap: balance; }
+.hero-lede, .section-heading > p, .services-intro p, .service-card p, .project-card p, .about-copy > p, .contact-inner p { text-wrap: pretty; }
+
+.services-section { padding-block: 115px 125px; border-top: 1px solid var(--line); scroll-margin-top: 72px; }
+.services-heading { margin-bottom: 46px; }
+.services-panel { display: grid; grid-template-columns: .92fr 1.08fr; overflow: hidden; border: 1px solid var(--line); background: rgba(12,18,30,.72); box-shadow: 0 24px 80px rgba(0,0,0,.18); }
+.services-intro { display: flex; flex-direction: column; justify-content: center; padding: clamp(32px, 5vw, 58px); border-right: 1px solid var(--line); background: radial-gradient(circle at 20% 10%, rgba(129,247,216,.08), transparent 18rem), rgba(255,255,255,.018); }
+.services-eyebrow { width: fit-content; margin: 0 0 22px; padding: 6px 9px; border: 1px solid rgba(255,202,128,.24); color: var(--amber); background: rgba(255,202,128,.045); font: 600 .62rem var(--font-mono); letter-spacing: .1em; text-transform: uppercase; }
+.services-intro h3 { max-width: 520px; margin: 0; font-size: clamp(2rem, 3.2vw, 3.2rem); line-height: 1.05; letter-spacing: -.055em; }
+.services-intro > p { max-width: 560px; margin: 25px 0 0; color: var(--muted); }
+.services-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 34px; }
+.service-grid { display: grid; grid-template-columns: repeat(2, 1fr); border-left: 1px solid rgba(255,255,255,.02); }
+.service-card { min-height: 255px; padding: 30px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); background: linear-gradient(135deg, rgba(255,255,255,.025), transparent); }
+.service-card:nth-child(2n) { border-right: 0; }
+.service-card:nth-last-child(-n+2) { border-bottom: 0; }
+.service-card-top { display: flex; align-items: center; justify-content: space-between; color: var(--mint); }
+.service-card-top span { color: var(--dim); font: .65rem var(--font-mono); }
+.service-card h3 { margin: 48px 0 12px; font-size: 1.12rem; }
+.service-card p { margin: 0; color: var(--muted); font-size: .89rem; }
 .project-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; }
 .project-card { overflow: hidden; border: 1px solid var(--line); background: rgba(15,22,36,.72); transition: border-color .25s ease; }
 .project-card:hover, .project-card:focus-within { border-color: rgba(129,247,216,.28); }
@@ -317,6 +334,8 @@ button, textarea, input { font: inherit; }
   .header-socials { display: none; }
   .hero, .project-hero { grid-template-columns: 1fr; gap: 65px; }
   .hero { padding-block: 85px; }
+  .services-panel { grid-template-columns: 1fr; }
+  .services-intro { border-right: 0; border-bottom: 1px solid var(--line); }
   .project-grid { grid-template-columns: 1fr; }
   .project-card-twin, .project-card-api, .project-card-lle, .project-card-finance { grid-column: auto; display: block; }
   .project-card-twin .project-visual, .project-card-api .project-visual, .project-card-lle .project-visual, .project-card-finance .project-visual { min-height: 360px; border-right: 0; border-bottom: 1px solid var(--line); }
@@ -344,7 +363,12 @@ button, textarea, input { font: inherit; }
   .console-body { min-height: 300px; padding: 23px 20px; font-size: .7rem; }
   .section-heading { display: block; }
   .section-heading > p { margin-top: 24px; }
-  .work-section, .capabilities-section { padding-block: 85px; }
+  .services-section, .work-section, .capabilities-section { padding-block: 85px; }
+  .service-grid { grid-template-columns: 1fr; }
+  .service-card, .service-card:nth-child(2n), .service-card:nth-last-child(-n+2) { min-height: 210px; border-right: 0; border-bottom: 1px solid var(--line); }
+  .service-card:last-child { border-bottom: 0; }
+  .service-card h3 { margin-top: 38px; }
+  .services-actions .button { width: 100%; }
   .project-visual, .project-card-twin .project-visual, .project-card-api .project-visual, .project-card-lle .project-visual, .project-card-finance .project-visual { min-height: 285px; }
   .finance-agent-strip { right: 15px; left: 15px; gap: 5px; font-size: .46rem; }
   .tetris-grid { inset-inline: 16%; }
