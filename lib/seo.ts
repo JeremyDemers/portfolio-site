@@ -96,30 +96,111 @@ export function softwareApplicationStructuredData(project: Project) {
   };
 }
 
-export const profileStructuredData = {
-  "@context": "https://schema.org",
+const personStructuredData = {
+  "@type": "Person",
+  "@id": `${SITE_URL}/#jeremy-demers`,
+  name: "Jeremy Demers",
+  url: `${SITE_URL}/`,
+  email: "mailto:JeremySD99@gmail.com",
+  jobTitle: "Software and AI consultant",
+  description:
+    "Software and AI consultant building multi-agent AI platforms, computer-vision systems, interactive applications, and serverless products on AWS.",
+  sameAs: [
+    "https://github.com/JeremyDemers",
+    "https://www.linkedin.com/in/jeremy-demers/",
+  ],
+  knowsAbout: [
+    "Software consulting",
+    "AI consulting",
+    "Full-stack development",
+    "Multi-agent artificial intelligence",
+    "Computer vision",
+    "Serverless AWS architecture",
+    "Interactive web applications",
+  ],
+};
+
+const profilePageStructuredData = {
   "@type": "ProfilePage",
   "@id": `${SITE_URL}/#profile-page`,
   url: `${SITE_URL}/`,
-  name: "Jeremy Demers | Full-stack and AI engineer",
+  name: "Jeremy Demers | Software and AI consultant",
+  description:
+    "Portfolio and consulting site for Jeremy Demers, a software and AI consultant building full-stack applications, AI workflows, and serverless AWS systems.",
   mainEntity: {
-    "@type": "Person",
     "@id": `${SITE_URL}/#jeremy-demers`,
-    name: "Jeremy Demers",
-    url: `${SITE_URL}/`,
-    jobTitle: "Full-stack and AI engineer",
-    description:
-      "Developer building multi-agent AI platforms, computer-vision systems, interactive applications, and serverless products on AWS.",
-    sameAs: [
-      "https://github.com/JeremyDemers",
-      "https://www.linkedin.com/in/jeremy-demers/",
-    ],
-    knowsAbout: [
-      "Full-stack development",
-      "Multi-agent artificial intelligence",
-      "Computer vision",
-      "Serverless AWS architecture",
-      "Interactive web applications",
+  },
+};
+
+export const consultingServiceStructuredData = {
+  "@type": "Service",
+  "@id": `${SITE_URL}/#software-ai-consulting`,
+  name: "Jeremy S. Demers — Software / AI Consulting",
+  url: `${SITE_URL}/#services`,
+  description:
+    "Remote-first software and AI consulting for full-stack applications, applied AI prototypes, cloud architecture, automation, and serverless AWS systems.",
+  provider: {
+    "@id": `${SITE_URL}/#jeremy-demers`,
+  },
+  areaServed: {
+    "@type": "Country",
+    name: "United States",
+  },
+  availableChannel: {
+    "@type": "ServiceChannel",
+    serviceUrl: `${SITE_URL}/#contact`,
+    availableLanguage: "English",
+  },
+  serviceType: [
+    "Software consulting",
+    "AI consulting",
+    "Full-stack web application development",
+    "Serverless AWS architecture",
+    "Applied AI and automation prototyping",
+  ],
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Software and AI consulting services",
+    itemListElement: [
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Software / AI consulting",
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Full-stack implementation",
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Cloud architecture and automation",
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Applied AI and interactive prototypes",
+        },
+      },
     ],
   },
 };
+
+export const homepageStructuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    profilePageStructuredData,
+    personStructuredData,
+    consultingServiceStructuredData,
+  ],
+};
+
+export const profileStructuredData = homepageStructuredData;

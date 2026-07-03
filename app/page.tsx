@@ -1,13 +1,36 @@
 import Link from "next/link";
-import { ArrowDownRight, Cloud, Code2, Gamepad2, Github, Linkedin, Sparkles } from "lucide-react";
+import { ArrowDownRight, Cloud, Code2, Gamepad2, Github, Linkedin, Mail, Sparkles } from "lucide-react";
 import { ProjectVisual } from "@/components/ProjectVisual";
 import { projects } from "@/lib/projects";
-import { profileStructuredData } from "@/lib/seo";
+import { homepageStructuredData } from "@/lib/seo";
 
 const capabilities = [
   { icon: Code2, title: "Full-stack product work", text: "Type-safe interfaces, Python and C# APIs, authentication, persistence, and the details that turn code into a product." },
   { icon: Cloud, title: "Serverless AWS systems", text: "Lambda, API Gateway, S3, CloudFront, DynamoDB, Bedrock, IAM, Route 53, and infrastructure managed with Terraform." },
   { icon: Gamepad2, title: "Interactive engineering", text: "Responsive game loops, canvas rendering, keyboard and touch input, audio, animation, and careful interface feedback." },
+];
+
+const consultingServices = [
+  {
+    icon: Sparkles,
+    title: "Software / AI consulting",
+    text: "Clarify the problem, choose a practical path, and turn early ideas into scoped technical plans or working prototypes.",
+  },
+  {
+    icon: Code2,
+    title: "Full-stack implementation",
+    text: "Build usable web applications, APIs, dashboards, authentication flows, data models, and the glue that connects them.",
+  },
+  {
+    icon: Cloud,
+    title: "Cloud architecture & automation",
+    text: "Design serverless AWS systems, infrastructure-as-code, deployment pipelines, and integrations that are maintainable after launch.",
+  },
+  {
+    icon: Gamepad2,
+    title: "Applied AI & interactive prototypes",
+    text: "Prototype multi-agent workflows, computer-vision tools, automation helpers, and interfaces that make complex systems easier to use.",
+  },
 ];
 
 const projectPriority = ["financial-advisor", "lle-analysis", "digital-twin", "empower-api", "tetris", "neon-shatter"];
@@ -20,19 +43,19 @@ export default function Home() {
     <main>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(profileStructuredData) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(homepageStructuredData) }}
       />
       <section className="hero shell">
         <div className="hero-copy">
-          <div className="availability"><span /> Open to programming opportunities</div>
+          <div className="availability"><span /> Available for consulting & programming projects</div>
           <h1>I build software people can <em>experience.</em></h1>
           <p className="hero-lede">
-            Interactive web applications, multi-agent AI, computer-vision systems,
-            and serverless products on AWS.
+            Software and AI consulting for useful products: interactive web applications,
+            multi-agent systems, computer-vision tools, and serverless AWS platforms.
           </p>
           <div className="hero-actions">
-            <a className="button button-primary" href="#work">View work <ArrowDownRight size={17} aria-hidden="true" /></a>
-            <a className="button button-secondary" href="#contact">Contact</a>
+            <a className="button button-primary" href="#services">Explore services <ArrowDownRight size={17} aria-hidden="true" /></a>
+            <a className="button button-secondary" href="#work">View work</a>
           </div>
         </div>
         <div className="hero-console" aria-label="A summary of Jeremy's engineering focus">
@@ -45,7 +68,49 @@ export default function Home() {
             <p className="console-output"><i>02</i> generative AI</p>
             <p className="console-output"><i>03</i> interactive experiences</p>
             <p><span className="prompt">$</span> status</p>
-            <p className="console-output status-line"><span /> ready to build<span className="cursor">_</span></p>
+            <p className="console-output status-line"><span /> consulting_available<span className="cursor">_</span></p>
+          </div>
+        </div>
+      </section>
+
+      <section className="services-section shell" id="services">
+        <div className="section-heading services-heading">
+          <div>
+            <p className="section-kicker">Software / AI Consulting</p>
+            <h2>Practical help for teams turning ideas into working systems.</h2>
+          </div>
+          <p>
+            I offer remote-first software and AI consulting for clients and teams that need
+            thoughtful planning, hands-on implementation, or a prototype that proves an idea is real.
+          </p>
+        </div>
+
+        <div className="services-panel">
+          <div className="services-intro">
+            <p className="services-eyebrow">Available for client projects</p>
+            <h3>Jeremy S. Demers — Software / AI Consulting</h3>
+            <p>
+              I work with clients remotely across the United States by appointment, with a focus on
+              honest scope, maintainable systems, and practical engineering decisions. The goal is simple:
+              real software work that is clear, useful, and durable.
+            </p>
+            <div className="services-actions">
+              <a className="button button-primary" href="#contact">Start a conversation</a>
+              <a className="button button-secondary" href="#work">See project proof</a>
+            </div>
+          </div>
+
+          <div className="service-grid" aria-label="Software and AI consulting services">
+            {consultingServices.map(({ icon: Icon, title, text }, index) => (
+              <article className="service-card" key={title}>
+                <div className="service-card-top">
+                  <Icon size={20} aria-hidden="true" />
+                  <span>0{index + 1}</span>
+                </div>
+                <h3>{title}</h3>
+                <p>{text}</p>
+              </article>
+            ))}
           </div>
         </div>
       </section>
@@ -123,12 +188,18 @@ export default function Home() {
         <div className="shell contact-inner">
           <div>
             <p className="section-kicker">Contact</p>
-            <h2>Have a role or a hard problem in mind?</h2>
-            <p>I&apos;m open to full-stack, cloud, AI, and interactive engineering opportunities. LinkedIn is the quickest way to reach me.</p>
+            <h2>Have a product idea, AI workflow, or hard problem in mind?</h2>
+            <p>
+              I&apos;m available for software and AI consulting, project work, and full-stack engineering opportunities.
+              Remote-first across the United States; email or LinkedIn are the best ways to reach me.
+            </p>
           </div>
           <div className="contact-actions">
+            <a className="button button-primary" href="mailto:JeremySD99@gmail.com">
+              <Mail size={17} aria-hidden="true" /> Email me
+            </a>
             <a className="button button-primary" href="https://www.linkedin.com/in/jeremy-demers/" target="_blank" rel="noreferrer noopener">
-              <Linkedin size={17} aria-hidden="true" /> Contact
+              <Linkedin size={17} aria-hidden="true" /> Start a conversation
             </a>
             <a className="button button-secondary" href="https://github.com/JeremyDemers" target="_blank" rel="noreferrer noopener">
               <Github size={17} aria-hidden="true" /> GitHub
