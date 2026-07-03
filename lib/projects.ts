@@ -8,7 +8,6 @@ export type Project = {
   source: string;
   video?: string;
   visual: "tetris" | "shatter" | "twin" | "lle" | "api" | "finance";
-  external?: boolean;
   tech: string[];
   highlights: string[];
   architecture: string[];
@@ -23,10 +22,9 @@ export const projects: Project[] = [
       "A production-oriented financial planning platform where five specialized AI agents collaborate on portfolio reports, charts, classification, and retirement projections.",
     description:
       "jd Financial Advisor combines a Next.js product interface with FastAPI services and a five-agent analysis workflow. AWS Lambda, SQS, Aurora Serverless, S3 vector search, SageMaker embeddings, and Amazon Bedrock support asynchronous planning with authenticated, per-user portfolio data.",
-    href: "https://github.com/JeremyDemers/jd_financial_advisor",
+    href: "/projects/financial-advisor/",
     source: "https://github.com/JeremyDemers/jd_financial_advisor",
     visual: "finance",
-    external: true,
     tech: ["Next.js", "FastAPI", "Amazon Bedrock", "AWS Lambda", "Aurora", "Terraform"],
     highlights: [
       "Five specialized agents orchestrate portfolio analysis, reporting, charting, classification, and retirement planning",
@@ -108,11 +106,10 @@ export const projects: Project[] = [
       "A hardware-integrated vision system that captures extraction vials, identifies liquid layers and menisci, estimates volumes, and generates laboratory reports.",
     description:
       "LLE Vial Analysis combines a custom camera and lighting assembly with a trained PyTorch detector and a Flask control interface. The system follows a 48-position plate workflow, measures liquid-liquid extraction layers, flags unsuitable samples, and turns each run into annotated images, Excel reports, and structured data.",
-    href: "https://github.com/JeremyDemers/LLE-Analysis",
+    href: "/projects/lle-analysis/",
     source: "https://github.com/JeremyDemers/LLE-Analysis",
     video: "https://youtu.be/jF45N3MsKkI",
     visual: "lle",
-    external: true,
     tech: ["Python", "PyTorch", "OpenCV", "Flask", "Socket.IO", "SQLite"],
     highlights: [
       "Custom-trained object detection for vials, liquid layers, menisci, residue, and rag layers",
@@ -134,10 +131,9 @@ export const projects: Project[] = [
       "An ASP.NET Core 8 API for querying Waters Empower 3 data stored in Oracle, with schema tracking, documented endpoints, and container deployment.",
     description:
       "Empower API provides a documented service layer over Waters Empower 3 data in Oracle. It combines focused query endpoints with SQLite schema tracking, background services, structured request logging, and a Docker-based runtime.",
-    href: "https://github.com/JeremyDemers/Empower-API",
+    href: "/projects/empower-api/",
     source: "https://github.com/JeremyDemers/Empower-API",
     visual: "api",
-    external: true,
     tech: ["C#", "ASP.NET Core 8", "Oracle", "SQLite", "Docker", "Swagger"],
     highlights: [
       "Purpose-built endpoints for querying Waters Empower 3 data",
@@ -152,6 +148,8 @@ export const projects: Project[] = [
 export const games = projects.filter(
   (project) => project.slug === "tetris" || project.slug === "neon-shatter",
 );
+
+export const caseStudies = projects.filter((project) => project.href.startsWith("/projects/"));
 
 export function getProject(slug: string): Project | undefined {
   return projects.find((project) => project.slug === slug);

@@ -15,6 +15,11 @@ export function ProjectDetail({ project }: { project: Project }) {
             <a className="button button-primary" href={project.source} target="_blank" rel="noreferrer">
               Explore the source <span aria-hidden="true">↗</span>
             </a>
+            {project.video && (
+              <a className="button button-secondary" href={project.video} target="_blank" rel="noreferrer">
+                Watch the demo <span aria-hidden="true">↗</span>
+              </a>
+            )}
             <Link className="button button-secondary" href="/#work">More work</Link>
           </div>
         </div>
@@ -49,4 +54,3 @@ export function ProjectDetail({ project }: { project: Project }) {
     </main>
   );
 }
-

@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
+import { SITE_URL } from "@/lib/seo";
 import "./globals.css";
 
 const GOOGLE_ANALYTICS_ID = "G-S1NM72K1Q4";
@@ -11,17 +12,18 @@ const geist = Geist({ variable: "--font-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-mono", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://jeremysdemers.com"),
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: "Jeremy Demers | Full-stack developer",
+    default: "Jeremy Demers | Full-stack & AI engineer",
     template: "%s | Jeremy Demers",
   },
   description:
-    "Full-stack developer building interactive applications, generative AI experiences, and serverless systems on AWS.",
+    "Full-stack and AI engineer building multi-agent platforms, computer-vision systems, interactive applications, and serverless products on AWS.",
+  alternates: { canonical: SITE_URL },
   openGraph: {
-    title: "Jeremy Demers | Full-stack developer",
-    description: "Interactive applications, generative AI, and serverless systems on AWS.",
-    url: "https://jeremysdemers.com",
+    title: "Jeremy Demers | Full-stack & AI engineer",
+    description: "Multi-agent AI, computer vision, interactive applications, and serverless systems on AWS.",
+    url: SITE_URL,
     siteName: "Jeremy Demers",
     type: "website",
     images: [
@@ -29,14 +31,14 @@ export const metadata: Metadata = {
         url: "/images/portfolio-site-social-preview.jpg",
         width: 1280,
         height: 640,
-        alt: "Jeremy Demers, full-stack developer, AWS builder, and creative technologist",
+        alt: "Jeremy Demers, full-stack and AI engineer",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Jeremy Demers | Full-stack developer",
-    description: "Interactive applications, generative AI, and serverless systems on AWS.",
+    title: "Jeremy Demers | Full-stack & AI engineer",
+    description: "Multi-agent AI, computer vision, interactive applications, and serverless systems on AWS.",
     images: ["/images/portfolio-site-social-preview.jpg"],
   },
 };

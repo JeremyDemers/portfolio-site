@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowDownRight, Cloud, Code2, Gamepad2, Github, Linkedin, Sparkles } from "lucide-react";
 import { ProjectVisual } from "@/components/ProjectVisual";
 import { projects } from "@/lib/projects";
+import { profileStructuredData } from "@/lib/seo";
 
 const capabilities = [
   { icon: Code2, title: "Full-stack product work", text: "Type-safe interfaces, Python and C# APIs, authentication, persistence, and the details that turn code into a product." },
@@ -17,6 +18,10 @@ const featuredProjects = [...projects].sort(
 export default function Home() {
   return (
     <main>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(profileStructuredData) }}
+      />
       <section className="hero shell">
         <div className="hero-copy">
           <div className="availability"><span /> Open to programming opportunities</div>
@@ -67,13 +72,10 @@ export default function Home() {
                   {project.tech.slice(0, 4).map((technology) => <span key={technology}>{technology}</span>)}
                 </div>
                 <div className="project-links">
-                  {project.external ? (
-                    <a className="project-link" href={project.href} target="_blank" rel="noreferrer noopener">
-                      View source <span aria-hidden="true">↗</span>
-                    </a>
-                  ) : (
-                    <Link className="project-link" href={project.href}>View project <span aria-hidden="true">↗</span></Link>
-                  )}
+                  <Link className="project-link" href={project.href}>View project <span aria-hidden="true">↗</span></Link>
+                  <a className="project-link" href={project.source} target="_blank" rel="noreferrer noopener">
+                    Source <span aria-hidden="true">↗</span>
+                  </a>
                   {project.video && (
                     <a className="project-link" href={project.video} target="_blank" rel="noreferrer noopener">
                       Watch video <span aria-hidden="true">↗</span>

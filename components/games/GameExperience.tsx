@@ -11,20 +11,24 @@ export function GameExperience({ project }: { project: Project }) {
   return (
     <main className="integrated-game-page">
       <section className="game-page-banner shell">
-        <div>
+        <div className="game-page-copy">
           <Link href="/#work" className="game-breadcrumb">Arcade / {project.name}</Link>
-          <p><Info size={15} /> Play works locally in your browser. Accounts and leaderboards connect when the Arcade API is online.</p>
+          <h1>{project.name}</h1>
+          <p>{project.summary}</p>
         </div>
-        <a href={project.source} target="_blank" rel="noreferrer"><Github size={16} /> Source code</a>
+        <div className="game-page-actions">
+          <p><Info size={15} aria-hidden="true" /> Play locally in your browser. Accounts and leaderboards connect when the Arcade API is online.</p>
+          <a href={project.source} target="_blank" rel="noreferrer"><Github size={16} aria-hidden="true" /> Source code</a>
+        </div>
       </section>
 
       <ShadowSurface
         label={`${project.name} playable application`}
         stylesheet={isTetris ? "/game-styles/tetris.css" : "/game-styles/neon-shatter.css"}
+        className={`game-host-${project.slug}`}
       >
         {isTetris ? <TetrisGame /> : <NeonShatterGame />}
       </ShadowSurface>
     </main>
   );
 }
-

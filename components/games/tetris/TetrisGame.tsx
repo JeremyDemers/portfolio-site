@@ -656,7 +656,7 @@ export function TetrisGame() {
           </div>
           <div>
             <p className="eyebrow">Arcade transmission 001</p>
-            <h1>Tetris</h1>
+            <div className="game-wordmark">Tetris</div>
           </div>
         </div>
         <div className="top-actions">
