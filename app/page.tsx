@@ -38,6 +38,12 @@ const featuredProjects = [...projects].sort(
   (first, second) => projectPriority.indexOf(first.slug) - projectPriority.indexOf(second.slug),
 );
 
+function projectCtaLabel(project: (typeof projects)[number]) {
+  if (project.href.startsWith("/games/")) return "Play the game";
+  if (project.slug === "digital-twin") return "Talk with my twin";
+  return "View project";
+}
+
 export default function Home() {
   return (
     <main>
@@ -137,7 +143,7 @@ export default function Home() {
                   {project.tech.slice(0, 4).map((technology) => <span key={technology}>{technology}</span>)}
                 </div>
                 <div className="project-links">
-                  <Link className="project-link" href={project.href}>View project <span aria-hidden="true">↗</span></Link>
+                  <Link className="project-link" href={project.href}>{projectCtaLabel(project)} <span aria-hidden="true">↗</span></Link>
                   <a className="project-link" href={project.source} target="_blank" rel="noreferrer noopener">
                     Source <span aria-hidden="true">↗</span>
                   </a>
