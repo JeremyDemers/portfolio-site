@@ -137,10 +137,18 @@ button, textarea, input { font: inherit; }
 .project-proof strong { color: var(--mint); font: 600 .61rem/1.6 var(--font-mono); letter-spacing: .07em; text-transform: uppercase; }
 .tag-list { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 22px; }
 .tag-list span { padding: 5px 9px; border: 1px solid var(--line); color: #92a3b5; background: rgba(255,255,255,.02); font: 500 .64rem var(--font-mono); }
+.recruiter-twin-prompt { display: grid; gap: 5px; margin-top: 20px !important; padding: 13px 14px; border: 1px solid rgba(129,247,216,.18); color: #b8c7d5 !important; background: linear-gradient(90deg, rgba(129,247,216,.07), rgba(169,156,255,.045)); font: 500 .74rem/1.55 var(--font-mono); }
+.recruiter-twin-prompt span { color: var(--amber); font-size: .62rem; font-weight: 700; letter-spacing: .11em; text-transform: uppercase; }
 .project-links { display: flex; flex-wrap: wrap; align-items: center; gap: 22px; margin-top: 28px; }
 .project-link, .text-link { width: fit-content; display: inline-flex; align-items: center; gap: 9px; margin-top: 28px; padding-bottom: 4px; border-bottom: 1px solid rgba(129,247,216,.34); color: var(--mint); font: 600 .72rem var(--font-mono); text-transform: uppercase; letter-spacing: .06em; }
 .project-links .project-link { margin-top: 0; }
 .project-link:hover, .text-link:hover { color: #b2ffea; border-color: currentColor; }
+.project-link-twin { padding: 7px 10px; border: 1px solid rgba(129,247,216,.38); background: rgba(129,247,216,.055); animation: twin-cta-breathe 3.8s ease-in-out infinite; }
+.project-link-twin:hover { background: rgba(129,247,216,.1); }
+@keyframes twin-cta-breathe {
+  0%, 100% { border-color: rgba(129,247,216,.28); box-shadow: 0 0 0 rgba(129,247,216,0); }
+  50% { border-color: rgba(129,247,216,.72); box-shadow: 0 0 28px rgba(129,247,216,.18); }
+}
 
 .project-visual { position: relative; min-height: 360px; overflow: hidden; border-bottom: 1px solid var(--line); background-color: #0a111d; }
 .project-card-twin .project-visual, .project-card-api .project-visual, .project-card-lle .project-visual, .project-card-finance .project-visual { border: 0; border-right: 1px solid var(--line); }
@@ -413,4 +421,5 @@ button, textarea, input { font: inherit; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+  .project-link-twin { animation: none !important; box-shadow: 0 0 0 1px rgba(129,247,216,.12); }
 }

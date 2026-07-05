@@ -44,6 +44,10 @@ function projectCtaLabel(project: (typeof projects)[number]) {
   return "View project";
 }
 
+function projectCtaClassName(project: (typeof projects)[number]) {
+  return project.slug === "digital-twin" ? "project-link project-link-twin" : "project-link";
+}
+
 export default function Home() {
   return (
     <main>
@@ -142,8 +146,14 @@ export default function Home() {
                 <div className="tag-list">
                   {project.tech.slice(0, 4).map((technology) => <span key={technology}>{technology}</span>)}
                 </div>
+                {project.slug === "digital-twin" && (
+                  <p className="recruiter-twin-prompt">
+                    <span>Recruiter shortcut</span>
+                    Ask about AWS, AI systems, Python, C#, and how I turn ambiguous problems into working software.
+                  </p>
+                )}
                 <div className="project-links">
-                  <Link className="project-link" href={project.href}>{projectCtaLabel(project)} <span aria-hidden="true">↗</span></Link>
+                  <Link className={projectCtaClassName(project)} href={project.href}>{projectCtaLabel(project)} <span aria-hidden="true">↗</span></Link>
                   <a className="project-link" href={project.source} target="_blank" rel="noreferrer noopener">
                     Source <span aria-hidden="true">↗</span>
                   </a>
