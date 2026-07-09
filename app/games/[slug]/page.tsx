@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { GameExperience } from "@/components/games/GameExperience";
 import { games, getProject } from "@/lib/projects";
-import { projectMetadata, softwareApplicationStructuredData } from "@/lib/seo";
+import { projectMetadata, projectPageStructuredData } from "@/lib/seo";
 
 export function generateStaticParams() {
   return games.map((game) => ({ slug: game.slug }));
@@ -22,7 +22,7 @@ export default async function GamePage({ params }: { params: Promise<{ slug: str
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareApplicationStructuredData(project)) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(projectPageStructuredData(project)) }}
       />
       <GameExperience project={project} />
     </>
