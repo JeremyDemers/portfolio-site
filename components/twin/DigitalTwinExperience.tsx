@@ -6,6 +6,7 @@ import { FormEvent, KeyboardEvent, useEffect, useRef, useState } from "react";
 import { ArrowUpRight, Bot, Github, LoaderCircle, Network, Send, Sparkles, User, X } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { buildApiUrl, getPublicApiBase } from "@/lib/public-config";
 
 type Message = {
   id: string;
@@ -22,7 +23,7 @@ const suggestions = [
   "How would you describe Jeremy's working style?",
 ];
 
-const API_BASE = process.env.NEXT_PUBLIC_TWIN_API_URL ?? "http://localhost:8000";
+const API_BASE = getPublicApiBase(process.env.NEXT_PUBLIC_TWIN_API_URL, 8000);
 const PROFILE_IMAGE = "https://raw.githubusercontent.com/JeremyDemers/digital-twin/main/frontend/public/profile_round_sm.png";
 
 export function DigitalTwinExperience() {
@@ -43,8 +44,14 @@ export function DigitalTwinExperience() {
     let isActive = true;
 
     async function checkApi() {
+      if (!API_BASE) {
+        if (isActive) setApiStatus("offline");
+        window.clearTimeout(timeout);
+        return;
+      }
+
       try {
-        const response = await fetch(`${API_BASE}/health`, { signal: controller.signal });
+        const response = await fetch(buildApiUrl(API_BASE, "/health"), { signal: controller.signal });
         if (isActive) setApiStatus(response.ok ? "online" : "offline");
       } catch {
         if (isActive) setApiStatus("offline");
@@ -116,7 +123,7 @@ export function DigitalTwinExperience() {
     setIsLoading(true);
 
     try {
-      const response = await fetch(`${API_BASE}/chat`, {
+      const response = await fetch(buildApiUrl(API_BASE, "/chat"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: content, session_id: sessionId || undefined }),

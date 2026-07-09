@@ -1,3 +1,5 @@
+import { buildApiUrl, getPublicApiBase } from "@/lib/public-config";
+
 export type User = {
   id: string | number;
   username: string;
@@ -24,10 +26,10 @@ export type PlayerStats = {
   total_lines: number;
 };
 
-const API_BASE = process.env.NEXT_PUBLIC_TETRIS_API_URL ?? "http://localhost:8000";
+const API_BASE = getPublicApiBase(process.env.NEXT_PUBLIC_TETRIS_API_URL, 8000);
 
 async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
-  const target = path.startsWith("/api/") ? path : `${API_BASE}${path}`;
+  const target = buildApiUrl(API_BASE, path);
   const response = await fetch(target, {
     ...options,
     headers: {

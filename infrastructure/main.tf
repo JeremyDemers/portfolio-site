@@ -16,6 +16,22 @@ locals {
     Environment = var.environment
     ManagedBy   = "terraform"
   }
+  content_security_policy = join("; ", [
+    "default-src 'self'",
+    "base-uri 'self'",
+    "object-src 'none'",
+    "frame-ancestors 'self'",
+    "form-action 'self' mailto:",
+    "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://accounts.google.com",
+    "style-src 'self' 'unsafe-inline' https://accounts.google.com",
+    "img-src 'self' data: https://raw.githubusercontent.com https://lh3.googleusercontent.com https://*.googleusercontent.com https://www.google-analytics.com",
+    "font-src 'self'",
+    "frame-src https://accounts.google.com",
+    "connect-src 'self' https://*.${var.domain_name} https://*.execute-api.us-east-1.amazonaws.com https://*.execute-api.us-east-2.amazonaws.com https://*.execute-api.us-west-2.amazonaws.com https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com",
+    "manifest-src 'self'",
+    "worker-src 'self'",
+    "upgrade-insecure-requests",
+  ])
 }
 
 resource "aws_s3_bucket" "site" {
@@ -105,6 +121,11 @@ resource "aws_cloudfront_response_headers_policy" "security" {
   name = "${local.name_prefix}-security-headers"
 
   security_headers_config {
+    content_security_policy {
+      content_security_policy = local.content_security_policy
+      override                = true
+    }
+
     content_type_options {
       override = true
     }
@@ -130,6 +151,26 @@ resource "aws_cloudfront_response_headers_policy" "security" {
       protection = true
       mode_block = true
       override   = true
+    }
+  }
+
+  custom_headers_config {
+    items {
+      header   = "Permissions-Policy"
+      override = true
+      value    = "accelerometer=(), autoplay=(), camera=(), encrypted-media=(), fullscreen=(self), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), usb=(), browsing-topics=()"
+    }
+
+    items {
+      header   = "Cross-Origin-Opener-Policy"
+      override = true
+      value    = "same-origin-allow-popups"
+    }
+
+    items {
+      header   = "X-Permitted-Cross-Domain-Policies"
+      override = true
+      value    = "none"
     }
   }
 }
