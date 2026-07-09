@@ -3,7 +3,15 @@ import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
-import { SITE_URL } from "@/lib/seo";
+import {
+  DEFAULT_DESCRIPTION,
+  DEFAULT_SOCIAL_IMAGE,
+  DEFAULT_TITLE,
+  PERSON_NAME,
+  SITE_NAME,
+  SITE_URL,
+  absoluteUrl,
+} from "@/lib/seo";
 import "./globals.css";
 
 const GOOGLE_ANALYTICS_ID = "G-S1NM72K1Q4";
@@ -14,32 +22,53 @@ const geistMono = Geist_Mono({ variable: "--font-mono", subsets: ["latin"] });
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Jeremy Demers | Software & AI Consulting",
-    template: "%s | Jeremy Demers",
+    default: DEFAULT_TITLE,
+    template: `%s | ${SITE_NAME}`,
   },
-  description:
-    "Software and AI consultant building full-stack applications, multi-agent platforms, computer-vision systems, and serverless products on AWS.",
-  alternates: { canonical: SITE_URL },
+  description: DEFAULT_DESCRIPTION,
+  keywords: [
+    "Jeremy Demers",
+    "software consultant",
+    "AI consultant",
+    "full-stack developer",
+    "AWS serverless",
+    "multi-agent AI",
+    "computer vision",
+    "Next.js developer",
+    "Python developer",
+    "C# developer",
+  ],
+  authors: [{ name: PERSON_NAME, url: absoluteUrl("/") }],
+  creator: PERSON_NAME,
+  publisher: PERSON_NAME,
+  alternates: { canonical: absoluteUrl("/") },
   openGraph: {
-    title: "Jeremy Demers | Software & AI Consulting",
-    description: "Software and AI consulting for full-stack applications, multi-agent AI, computer vision, and serverless AWS systems.",
-    url: SITE_URL,
-    siteName: "Jeremy Demers",
+    title: DEFAULT_TITLE,
+    description: DEFAULT_DESCRIPTION,
+    url: absoluteUrl("/"),
+    siteName: SITE_NAME,
+    locale: "en_US",
     type: "website",
     images: [
-      {
-        url: "/images/portfolio-site-social-preview.jpg",
-        width: 1280,
-        height: 640,
-        alt: "Jeremy Demers, full-stack and AI engineer",
-      },
+      DEFAULT_SOCIAL_IMAGE,
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Jeremy Demers | Software & AI Consulting",
-    description: "Software and AI consulting for full-stack applications, multi-agent AI, computer vision, and serverless AWS systems.",
-    images: ["/images/portfolio-site-social-preview.jpg"],
+    title: DEFAULT_TITLE,
+    description: DEFAULT_DESCRIPTION,
+    images: [DEFAULT_SOCIAL_IMAGE.url],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
   },
 };
 

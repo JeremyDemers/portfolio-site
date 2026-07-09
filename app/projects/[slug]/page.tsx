@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ProjectDetail } from "@/components/ProjectDetail";
 import { caseStudies, getProject } from "@/lib/projects";
-import { projectMetadata, softwareApplicationStructuredData } from "@/lib/seo";
+import { projectMetadata, projectPageStructuredData } from "@/lib/seo";
 
 export function generateStaticParams() {
   return caseStudies.map((project) => ({ slug: project.slug }));
@@ -23,7 +23,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareApplicationStructuredData(project)) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(projectPageStructuredData(project)) }}
       />
       <ProjectDetail project={project} />
     </>
