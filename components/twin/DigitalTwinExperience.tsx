@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { FormEvent, KeyboardEvent, useEffect, useRef, useState } from "react";
 import { ArrowUpRight, Bot, Github, LoaderCircle, Network, Send, Sparkles, User, X } from "lucide-react";
-import ReactMarkdown from "react-markdown";
+import ReactMarkdown, { defaultUrlTransform, type Components, type UrlTransform } from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { buildApiUrl, getPublicApiBase } from "@/lib/public-config";
 
@@ -25,6 +25,49 @@ const suggestions = [
 
 const API_BASE = getPublicApiBase(process.env.NEXT_PUBLIC_TWIN_API_URL, 8000);
 const PROFILE_IMAGE = "https://raw.githubusercontent.com/JeremyDemers/digital-twin/main/frontend/public/profile_round_sm.png";
+const markdownAllowedElements = [
+  "a",
+  "blockquote",
+  "br",
+  "code",
+  "em",
+  "h2",
+  "h3",
+  "h4",
+  "li",
+  "ol",
+  "p",
+  "pre",
+  "strong",
+  "table",
+  "tbody",
+  "td",
+  "th",
+  "thead",
+  "tr",
+  "ul",
+];
+
+const markdownUrlTransform: UrlTransform = (url, key, node) => {
+  if (key === "src" || node.tagName === "img") return "";
+  return defaultUrlTransform(url);
+};
+
+const markdownComponents: Components = {
+  a({ href, children, ...props }) {
+    const safeHref = href ? defaultUrlTransform(href) : "";
+    if (!safeHref) return <>{children}</>;
+
+    return (
+      <a {...props} href={safeHref} target="_blank" rel="noreferrer noopener nofollow ugc">
+        {children}
+      </a>
+    );
+  },
+  img() {
+    return null;
+  },
+};
 
 export function DigitalTwinExperience() {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -218,7 +261,18 @@ export function DigitalTwinExperience() {
                   <span className="message-avatar">{message.role === "user" ? <User /> : <Bot />}</span>
                   <div>
                     <strong>{message.role === "user" ? "You" : "Digital Twin"}</strong>
-                    <div className="markdown-message"><ReactMarkdown remarkPlugins={[remarkGfm]}>{message.content}</ReactMarkdown></div>
+                    <div className="markdown-message">
+                      <ReactMarkdown
+                        allowedElements={markdownAllowedElements}
+                        components={markdownComponents}
+                        remarkPlugins={[remarkGfm]}
+                        skipHtml
+                        unwrapDisallowed
+                        urlTransform={markdownUrlTransform}
+                      >
+                        {message.content}
+                      </ReactMarkdown>
+                    </div>
                   </div>
                 </article>
               ))}
