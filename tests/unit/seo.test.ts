@@ -27,7 +27,9 @@ describe("projectMetadata", () => {
 
     expect(metadata.title).toBe("Digital Twin for Recruiters");
     expect(metadata.description).toContain("AWS, AI, Python, C#");
-    expect(metadata.alternates).toEqual({ canonical: `${SITE_URL}/digital-twin/` });
+    expect(metadata.alternates).toEqual({
+      canonical: `${SITE_URL}/digital-twin/`,
+    });
     expect(metadata.openGraph).toMatchObject({
       url: `${SITE_URL}/digital-twin/`,
       siteName: "Jeremy Demers",
@@ -36,6 +38,28 @@ describe("projectMetadata", () => {
 });
 
 describe("structured data", () => {
+  it("associates public repositories with source-code entities only", () => {
+    const graph = projectPageStructuredData(getProject("tetris")!)["@graph"];
+    const source = graph.find(node => node["@type"] === "SoftwareSourceCode");
+    expect(source).toMatchObject({ codeRepository: getProject("tetris")!.source });
+    expect(graph[0]).not.toHaveProperty("codeRepository");
+    for (const slug of ["photo-blaze", "talazaki-pizza"]) {
+      const privateGraph = projectPageStructuredData(getProject(slug)!)["@graph"];
+      expect(JSON.stringify(privateGraph)).not.toContain("codeRepository");
+      expect(privateGraph[0]).toMatchObject({ url: getProject(slug)!.liveUrl });
+    }
+  });
+  it("omits private repository URLs and unsupported free offers", () => {
+    for (const slug of ["photo-blaze", "talazaki-pizza"]) {
+      const graph = projectPageStructuredData(getProject(slug)!)["@graph"];
+      expect(graph[0]).not.toHaveProperty("codeRepository");
+      expect(graph[0]).not.toHaveProperty("offers");
+      expect(graph[0]).not.toHaveProperty("isAccessibleForFree");
+    }
+    expect(JSON.stringify(homepageStructuredData)).not.toMatch(
+      /consult|#services|"Service"/i,
+    );
+  });
   it("builds ordered breadcrumbs with absolute item URLs", () => {
     expect(
       breadcrumbStructuredData([
@@ -46,9 +70,24 @@ describe("structured data", () => {
     ).toEqual({
       "@type": "BreadcrumbList",
       itemListElement: [
-        { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
-        { "@type": "ListItem", position: 2, name: "Games", item: `${SITE_URL}/#work` },
-        { "@type": "ListItem", position: 3, name: "Tetris", item: `${SITE_URL}/games/tetris/` },
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: `${SITE_URL}/`,
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Games",
+          item: `${SITE_URL}/#work`,
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Tetris",
+          item: `${SITE_URL}/games/tetris/`,
+        },
       ],
     });
   });
@@ -75,7 +114,7 @@ describe("structured data", () => {
     });
   });
 
-  it("keeps homepage schema aligned with the public identity and services", () => {
+  it("keeps homepage schema aligned with the professional identity", () => {
     expect(homepageStructuredData).toMatchObject({
       "@context": "https://schema.org",
       "@graph": expect.arrayContaining([
@@ -89,8 +128,8 @@ describe("structured data", () => {
           name: DEFAULT_TITLE,
         }),
         expect.objectContaining({
-          "@type": "Service",
-          serviceType: expect.arrayContaining(["AI consulting"]),
+          "@type": "Person",
+          jobTitle: "Software Engineer",
         }),
       ]),
     });

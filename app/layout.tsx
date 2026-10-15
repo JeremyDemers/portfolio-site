@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import Script from "next/script";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
@@ -16,11 +16,21 @@ import "./globals.css";
 
 const GOOGLE_ANALYTICS_ID = "G-S1NM72K1Q4";
 
-const geist = Geist({ variable: "--font-sans", subsets: ["latin"] });
-const geistMono = Geist_Mono({ variable: "--font-mono", subsets: ["latin"] });
+const geist = Inter({ variable: "--font-sans", subsets: ["latin"] });
+const geistMono = JetBrains_Mono({
+  variable: "--font-mono",
+  subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
+  icons: {
+    icon: [
+      { url: "/favicon-96.png", sizes: "96x96", type: "image/png" },
+      { url: "/icon.svg", sizes: "any", type: "image/svg+xml" },
+    ],
+    apple: [{ url: "/apple-icon.png", sizes: "180x180", type: "image/png" }],
+  },
   title: {
     default: DEFAULT_TITLE,
     template: `%s | ${SITE_NAME}`,
@@ -28,8 +38,8 @@ export const metadata: Metadata = {
   description: DEFAULT_DESCRIPTION,
   keywords: [
     "Jeremy Demers",
-    "software consultant",
-    "AI consultant",
+    "software engineer",
+    "applied AI",
     "full-stack developer",
     "AWS serverless",
     "multi-agent AI",
@@ -49,9 +59,7 @@ export const metadata: Metadata = {
     siteName: SITE_NAME,
     locale: "en_US",
     type: "website",
-    images: [
-      DEFAULT_SOCIAL_IMAGE,
-    ],
+    images: [DEFAULT_SOCIAL_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
@@ -72,11 +80,15 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default function RootLayout({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${geist.variable} ${geistMono.variable}`}>
       <body id="top">
-        <a className="skip-link" href="#main-content">Skip to content</a>
+        <a className="skip-link" href="#main-content">
+          Skip to content
+        </a>
         <SiteHeader />
         <div id="main-content">{children}</div>
         <SiteFooter />
