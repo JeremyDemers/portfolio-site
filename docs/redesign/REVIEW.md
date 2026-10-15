@@ -69,4 +69,6 @@ The interactive frontend still needs the existing configured API services for re
 ## Deployment preparation — October 15, 2026
 
 The owner requested production deployment after the redesign, game thumbnails and favicon/SEO follow-ups. Next.js and its ESLint configuration were upgraded to 16.4.2, PostCSS to 8.5.30, and compatible lockfile dependencies refreshed. Lint, 21 tests, static build and the nine-page exported SEO audit pass. The production dependency audit reports zero vulnerabilities. Full dependency auditing still reports a high advisory in the development-only ESLint/fast-glob/braces chain, for which the installed supported version has no patched braces release. Deployment remains gated until the audit policy decision is resolved.
-`nThe owner approved scoping the production audit to `--omit=dev`. Lint, tests and build remain required. Development-only advisories remain documented above.
+
+The owner approved scoping the production audit to `--omit=dev`. Lint, tests and build remain required. Development-only advisories remain documented above.
+
