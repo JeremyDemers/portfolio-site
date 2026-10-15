@@ -1,13 +1,35 @@
 export type Project = {
-  slug: "tetris" | "neon-shatter" | "digital-twin" | "lle-analysis" | "empower-api" | "financial-advisor";
+  slug:
+    | "photo-blaze"
+    | "talazaki-pizza"
+    | "tetris"
+    | "neon-shatter"
+    | "digital-twin"
+    | "lle-analysis"
+    | "empower-api"
+    | "financial-advisor";
   name: string;
   eyebrow: string;
   summary: string;
   description: string;
   href: string;
-  source: string;
+  source?: string;
+  liveUrl?: string;
+  privacy?: "public-source" | "private-source";
+  featuredRank?: number;
+  cover?: { src: string; alt: string; fit?: "cover" | "contain" };
+  gallery?: Array<{ src: string; alt: string }>;
+  sections?: Array<{ heading: string; body: string }>;
   video?: string;
-  visual: "tetris" | "shatter" | "twin" | "lle" | "api" | "finance";
+  visual:
+    | "photo"
+    | "pizza"
+    | "tetris"
+    | "shatter"
+    | "twin"
+    | "lle"
+    | "api"
+    | "finance";
   tech: string[];
   highlights: string[];
   architecture: string[];
@@ -15,7 +37,96 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    slug: "photo-blaze",
+    name: "PhotoBlaze",
+    eyebrow: "Browser-based creative software",
+    summary:
+      "A photo-editing workspace that brings layered compositions and everyday image workflows into the browser.",
+    description:
+      "PhotoBlaze is my independently developed browser-based image-editing project. It explores how sophisticated editing workflows can live in an approachable workspace, with tools and guidance close to the image.",
+    href: "/projects/photo-blaze/",
+    liveUrl: "https://photo-blaze.com/",
+    privacy: "private-source",
+    featuredRank: 1,
+    visual: "photo",
+    tech: [],
+    highlights: [
+      "A dedicated browser editor, with task-based guides on the public website",
+      "A workspace organized around image tools and editable layers",
+    ],
+    architecture: [],
+    cover: {
+      src: "/images/projects/photo-blaze/editor-desktop.webp",
+      alt: "PhotoBlaze editor with its tools, canvas workspace, and layer panel",
+    },
+    gallery: [
+      {
+        src: "/images/projects/photo-blaze/editor-mobile.webp",
+        alt: "PhotoBlaze editor at a narrow mobile viewport",
+      },
+    ],
+    sections: [
+      {
+        heading: "The problem",
+        body: "Image editing brings a lot of controls into a small space. This project focuses on giving those controls a coherent home in the browser, while keeping entry points for everyday tasks easy to find.",
+      },
+      {
+        heading: "The experience",
+        body: "The public site provides task-based guides for cropping, resizing and image adjustments, alongside a direct path into the editor. The editor is a separate workspace, keeping learning and editing connected without crowding either experience.",
+      },
+      {
+        heading: "Designing for the workspace",
+        body: "The product recommends a desktop browser. The narrow-screen capture below documents the current interface rather than implying that a phone offers the same working space as a desktop.",
+      },
+    ],
+  },
+  {
+    slug: "talazaki-pizza",
+    name: "TalaZaki Pizza",
+    eyebrow: "Restaurant web experience",
+    summary:
+      "A customer-facing restaurant website built around food discovery, menu browsing, and clear contact and ordering entry points.",
+    description:
+      "TalaZaki Pizza brings a neighborhood restaurant online with a distinctive food-led identity. The experience connects its menu, opening hours and location in one responsive website.",
+    href: "/projects/talazaki-pizza/",
+    liveUrl: "https://talazakipizza.com/",
+    privacy: "private-source",
+    featuredRank: 2,
+    visual: "pizza",
+    tech: [],
+    highlights: [
+      "Categorized menu with item descriptions and prices",
+      "Visible hours, location, phone and ordering entry points",
+    ],
+    architecture: [],
+    cover: {
+      src: "/images/projects/talazaki-pizza/homepage-desktop.webp",
+      alt: "TalaZaki homepage with restaurant food photography and menu and phone actions",
+    },
+    gallery: [
+      {
+        src: "/images/projects/talazaki-pizza/menu-mobile.webp",
+        alt: "TalaZaki restaurant menu on a mobile screen",
+      },
+    ],
+    sections: [
+      {
+        heading: "The problem",
+        body: "A restaurant website needs to answer practical questions quickly: what is on the menu, when is the restaurant open, and how can a customer order or visit?",
+      },
+      {
+        heading: "The experience",
+        body: "Food photography introduces the restaurant, while clear navigation leads to the menu, hours, story and location. Menu categories organize a substantial selection, and contact actions remain easy to identify.",
+      },
+      {
+        heading: "A focused public presence",
+        body: "The case study focuses on the customer-facing website. Ordering entry points are visible in the live experience; no claims are made about private restaurant systems or order-processing integrations.",
+      },
+    ],
+  },
+  {
     slug: "financial-advisor",
+    featuredRank: 4,
     name: "jd Financial Advisor",
     eyebrow: "Multi-agent financial intelligence",
     summary:
@@ -25,7 +136,14 @@ export const projects: Project[] = [
     href: "/projects/financial-advisor/",
     source: "https://github.com/JeremyDemers/jd_financial_advisor",
     visual: "finance",
-    tech: ["Next.js", "FastAPI", "Amazon Bedrock", "AWS Lambda", "Aurora", "Terraform"],
+    tech: [
+      "Next.js",
+      "FastAPI",
+      "Amazon Bedrock",
+      "AWS Lambda",
+      "Aurora",
+      "Terraform",
+    ],
     highlights: [
       "Five specialized agents orchestrate portfolio analysis, reporting, charting, classification, and retirement planning",
       "Asynchronous analysis jobs run through AWS Lambda and SQS",
@@ -49,14 +167,25 @@ export const projects: Project[] = [
     href: "/games/tetris/",
     source: "https://github.com/JeremyDemers/arcade/tree/main/tetris",
     visual: "tetris",
-    tech: ["Next.js", "React", "TypeScript", "FastAPI", "Python", "Google Identity"],
+    tech: [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "FastAPI",
+      "Python",
+      "Google Identity",
+    ],
     highlights: [
       "Hold queue, ghost piece, next-piece preview, and seven-bag generation",
       "Keyboard, pointer, and mobile-friendly on-screen controls",
       "Automatic score submission with top-ten and personal statistics",
       "Google authentication with server-side identity verification",
     ],
-    architecture: ["Next.js game client", "FastAPI application API", "Shared arcade identity and score data"],
+    architecture: [
+      "Next.js game client",
+      "FastAPI application API",
+      "Shared arcade identity and score data",
+    ],
   },
   {
     slug: "neon-shatter",
@@ -69,17 +198,29 @@ export const projects: Project[] = [
     href: "/games/neon-shatter/",
     source: "https://github.com/JeremyDemers/arcade/tree/main/neon-shatter",
     visual: "shatter",
-    tech: ["Next.js", "Canvas", "TypeScript", "FastAPI", "Web Audio", "Touch input"],
+    tech: [
+      "Next.js",
+      "Canvas",
+      "TypeScript",
+      "FastAPI",
+      "Web Audio",
+      "Touch input",
+    ],
     highlights: [
       "Responsive canvas gameplay across desktop and mobile displays",
       "Sector progression, reinforced bricks, combos, and increasing speed",
       "Procedural visual effects and Web Audio feedback",
       "Shared account, leaderboard, and personal-statistics experience",
     ],
-    architecture: ["React interface and canvas engine", "FastAPI application API", "Shared arcade identity and score data"],
+    architecture: [
+      "React interface and canvas engine",
+      "FastAPI application API",
+      "Shared arcade identity and score data",
+    ],
   },
   {
     slug: "digital-twin",
+    featuredRank: 3,
     name: "Digital Twin",
     eyebrow: "Generative AI on AWS",
     summary:
@@ -89,17 +230,29 @@ export const projects: Project[] = [
     href: "/digital-twin/",
     source: "https://github.com/JeremyDemers/digital-twin",
     visual: "twin",
-    tech: ["Amazon Bedrock", "AWS Lambda", "API Gateway", "Next.js", "FastAPI", "Terraform"],
+    tech: [
+      "Amazon Bedrock",
+      "AWS Lambda",
+      "API Gateway",
+      "Next.js",
+      "FastAPI",
+      "Terraform",
+    ],
     highlights: [
       "Grounded responses using curated professional facts and writing style",
       "Persistent conversation sessions with local and AWS storage adapters",
       "Responsive chat interface with Markdown and suggested prompts",
       "Fully described serverless infrastructure managed with Terraform",
     ],
-    architecture: ["CloudFront and static Next.js export", "API Gateway and Lambda", "Amazon Bedrock and private S3 memory"],
+    architecture: [
+      "CloudFront and static Next.js export",
+      "API Gateway and Lambda",
+      "Amazon Bedrock and private S3 memory",
+    ],
   },
   {
     slug: "lle-analysis",
+    featuredRank: 5,
     name: "LLE Vial Analysis",
     eyebrow: "Computer vision & lab automation",
     summary:
@@ -125,6 +278,7 @@ export const projects: Project[] = [
   },
   {
     slug: "empower-api",
+    featuredRank: 6,
     name: "Empower API",
     eyebrow: "Enterprise data integration",
     summary:
@@ -141,7 +295,11 @@ export const projects: Project[] = [
       "Swagger/OpenAPI documentation and structured Serilog logging",
       "Background services and a multi-stage Docker build",
     ],
-    architecture: ["ASP.NET Core API", "Oracle data source and SQLite metadata", "Swagger and Docker runtime"],
+    architecture: [
+      "ASP.NET Core API",
+      "Oracle data source and SQLite metadata",
+      "Swagger and Docker runtime",
+    ],
   },
 ];
 
@@ -149,8 +307,14 @@ export const games = projects.filter(
   (project) => project.slug === "tetris" || project.slug === "neon-shatter",
 );
 
-export const caseStudies = projects.filter((project) => project.href.startsWith("/projects/"));
+export const caseStudies = projects.filter((project) =>
+  project.href.startsWith("/projects/"),
+);
 
 export function getProject(slug: string): Project | undefined {
   return projects.find((project) => project.slug === slug);
 }
+
+export const featuredProjects = projects
+  .filter((project) => project.featuredRank !== undefined)
+  .sort((a, b) => a.featuredRank! - b.featuredRank!);

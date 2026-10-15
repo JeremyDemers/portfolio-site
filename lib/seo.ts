@@ -4,14 +4,14 @@ import type { Project } from "@/lib/projects";
 export const SITE_URL = "https://jeremysdemers.com";
 export const SITE_NAME = "Jeremy Demers";
 export const PERSON_NAME = "Jeremy Demers";
-export const DEFAULT_TITLE = "Jeremy Demers | Software & AI Consulting";
+export const DEFAULT_TITLE = "Jeremy Demers | Full-Stack Software Engineer";
 export const DEFAULT_DESCRIPTION =
-  "Software and AI consultant building full-stack applications, multi-agent platforms, computer-vision systems, and serverless products on AWS.";
+  "Software Engineer building full-stack applications, multi-agent platforms, computer-vision systems, and serverless products on AWS.";
 
 export const DEFAULT_SOCIAL_IMAGE = {
-  url: "/images/portfolio-site-social-preview.jpg",
-  width: 1280,
-  height: 640,
+  url: "/images/portfolio-social.png",
+  width: 1200,
+  height: 630,
   alt: "Jeremy Demers, full-stack and AI engineer",
 };
 
@@ -19,13 +19,28 @@ export function absoluteUrl(path = "/") {
   return new URL(path, `${SITE_URL}/`).toString();
 }
 
-const projectSocialImages: Partial<Record<Project["slug"], typeof DEFAULT_SOCIAL_IMAGE>> = {
-  "financial-advisor": {
-    url: "/images/jd-financial-advisor.webp",
-    width: 1000,
-    height: 563,
-    alt: "Multi-agent financial intelligence platform",
+const projectSocialImages: Partial<
+  Record<Project["slug"], typeof DEFAULT_SOCIAL_IMAGE>
+> = {
+  "photo-blaze": {
+    url: "/images/projects/photo-blaze/editor-desktop.webp",
+    width: 1440,
+    height: 900,
+    alt: "PhotoBlaze browser editor",
   },
+  "talazaki-pizza": {
+    url: "/images/projects/talazaki-pizza/homepage-desktop.webp",
+    width: 1440,
+    height: 900,
+    alt: "TalaZaki restaurant website",
+  },
+  "digital-twin": {
+    url: "/images/projects/digital-twin/chat-desktop.webp",
+    width: 1440,
+    height: 900,
+    alt: "Digital Twin chat interface",
+  },
+
   "lle-analysis": {
     url: "/images/lle-analysis-processing.webp",
     width: 1000,
@@ -34,7 +49,8 @@ const projectSocialImages: Partial<Record<Project["slug"], typeof DEFAULT_SOCIAL
   },
 };
 
-const applicationCategories: Record<Project["slug"], string> = {
+const applicationCategories: Partial<Record<Project["slug"], string>> = {
+  "photo-blaze": "MultimediaApplication",
   "financial-advisor": "FinanceApplication",
   tetris: "GameApplication",
   "neon-shatter": "GameApplication",
@@ -43,7 +59,8 @@ const applicationCategories: Record<Project["slug"], string> = {
   "empower-api": "DeveloperApplication",
 };
 
-const operatingSystems: Record<Project["slug"], string> = {
+const operatingSystems: Partial<Record<Project["slug"], string>> = {
+  "photo-blaze": "Web browser",
   "financial-advisor": "Web browser",
   tetris: "Web browser",
   "neon-shatter": "Web browser",
@@ -55,6 +72,16 @@ const operatingSystems: Record<Project["slug"], string> = {
 const projectMetadataOverrides: Partial<
   Record<Project["slug"], { title: string; description: string }>
 > = {
+  "photo-blaze": {
+    title: "PhotoBlaze Browser Photo Editor",
+    description:
+      "Explore PhotoBlaze, Jeremy Demers’ browser-based photo editor: a layered editing workspace, task-based guides, and genuine desktop and mobile screenshots.",
+  },
+  "talazaki-pizza": {
+    title: "TalaZaki Pizza Website Case Study",
+    description:
+      "Explore Jeremy Demers’ TalaZaki Pizza website project, featuring food-led design, menu discovery, restaurant information, and ordering entry points.",
+  },
   "financial-advisor": {
     title: "jd Financial Advisor AI Platform",
     description:
@@ -92,8 +119,8 @@ function projectKeywords(project: Project) {
     project.name,
     project.eyebrow,
     "Jeremy Demers",
-    "software consultant",
-    "AI consultant",
+    "software engineer",
+    "AI engineering",
     ...project.tech,
   ];
 }
@@ -121,6 +148,7 @@ export function projectMetadata(project: Project): Metadata {
       url: canonicalUrl,
       siteName: SITE_NAME,
       type: "website",
+      locale: "en_US",
       images: [socialImage],
     },
     twitter: {
@@ -137,26 +165,24 @@ function softwareApplicationNode(project: Project) {
   const socialImage = projectSocialImages[project.slug] ?? DEFAULT_SOCIAL_IMAGE;
 
   return {
-    "@type": isGame ? ["VideoGame", "WebApplication"] : "SoftwareApplication",
+    "@type": isGame
+      ? ["VideoGame", "WebApplication"]
+      : project.slug === "talazaki-pizza"
+        ? "WebSite"
+        : "SoftwareApplication",
     "@id": `${absoluteUrl(project.href)}#software`,
     name: project.name,
     description: project.summary,
-    url: absoluteUrl(project.href),
+    url: project.liveUrl ?? absoluteUrl(project.href),
     image: absoluteUrl(socialImage.url),
     applicationCategory: applicationCategories[project.slug],
     operatingSystem: operatingSystems[project.slug],
-    isAccessibleForFree: true,
-    codeRepository: project.source,
+    ...(isGame ? { isAccessibleForFree: true } : {}),
     author: {
       "@type": "Person",
       "@id": `${SITE_URL}/#jeremy-demers`,
       name: PERSON_NAME,
       url: absoluteUrl("/"),
-    },
-    offers: {
-      "@type": "Offer",
-      price: "0",
-      priceCurrency: "USD",
     },
   };
 }
@@ -168,7 +194,9 @@ export function softwareApplicationStructuredData(project: Project) {
   };
 }
 
-export function breadcrumbStructuredData(items: Array<{ name: string; href: string }>) {
+export function breadcrumbStructuredData(
+  items: Array<{ name: string; href: string }>,
+) {
   return {
     "@type": "BreadcrumbList",
     itemListElement: items.map((item, index) => ({
@@ -181,12 +209,11 @@ export function breadcrumbStructuredData(items: Array<{ name: string; href: stri
 }
 
 export function projectPageStructuredData(project: Project) {
-  const section =
-    project.href.startsWith("/games/")
-      ? { name: "Games", href: "/#work" }
-      : project.href.startsWith("/projects/")
-        ? { name: "Projects", href: "/#work" }
-        : undefined;
+  const section = project.href.startsWith("/games/")
+    ? { name: "Games", href: "/#work" }
+    : project.href.startsWith("/projects/")
+      ? { name: "Projects", href: "/#work" }
+      : undefined;
   const breadcrumbItems = [
     { name: "Home", href: "/" },
     ...(section ? [section] : []),
@@ -198,6 +225,27 @@ export function projectPageStructuredData(project: Project) {
     "@graph": [
       softwareApplicationNode(project),
       breadcrumbStructuredData(breadcrumbItems),
+      {
+        "@type": "WebPage",
+        "@id": `${absoluteUrl(project.href)}#page`,
+        url: absoluteUrl(project.href),
+        name: project.name,
+        description: project.summary,
+        inLanguage: "en-US",
+        isPartOf: { "@id": `${SITE_URL}/#website` },
+        mainEntity: { "@id": `${absoluteUrl(project.href)}#software` },
+      },
+      ...(project.source && project.privacy !== "private-source"
+        ? [
+            {
+              "@type": "SoftwareSourceCode",
+              "@id": `${absoluteUrl(project.href)}#source`,
+              name: `${project.name} source code`,
+              codeRepository: project.source,
+              targetProduct: { "@id": `${absoluteUrl(project.href)}#software` },
+            },
+          ]
+        : []),
     ],
   };
 }
@@ -220,16 +268,16 @@ const personStructuredData = {
   name: PERSON_NAME,
   url: absoluteUrl("/"),
   email: "mailto:JeremySD99@gmail.com",
-  jobTitle: "Software and AI consultant",
+  jobTitle: "Software Engineer",
   description:
-    "Software and AI consultant building multi-agent AI platforms, computer-vision systems, interactive applications, and serverless products on AWS.",
+    "Software Engineer building multi-agent AI platforms, computer-vision systems, interactive applications, and serverless products on AWS.",
   sameAs: [
     "https://github.com/JeremyDemers",
     "https://www.linkedin.com/in/jeremy-demers/",
   ],
   knowsAbout: [
-    "Software consulting",
-    "AI consulting",
+    "Software engineering",
+    "Applied AI",
     "Full-stack development",
     "Multi-agent artificial intelligence",
     "Computer vision",
@@ -244,71 +292,9 @@ const profilePageStructuredData = {
   url: absoluteUrl("/"),
   name: DEFAULT_TITLE,
   description:
-    "Portfolio and consulting site for Jeremy Demers, a software and AI consultant building full-stack applications, AI workflows, and serverless AWS systems.",
+    "Professional portfolio of Jeremy Demers, a software engineer building full-stack applications, AI workflows, and serverless AWS systems.",
   mainEntity: {
     "@id": `${SITE_URL}/#jeremy-demers`,
-  },
-};
-
-export const consultingServiceStructuredData = {
-  "@type": "Service",
-  "@id": `${SITE_URL}/#software-ai-consulting`,
-  name: "Jeremy S. Demers — Software / AI Consulting",
-  url: `${SITE_URL}/#services`,
-  description:
-    "Remote-first software and AI consulting for full-stack applications, applied AI prototypes, cloud architecture, automation, and serverless AWS systems.",
-  provider: {
-    "@id": `${SITE_URL}/#jeremy-demers`,
-  },
-  areaServed: {
-    "@type": "Country",
-    name: "United States",
-  },
-  availableChannel: {
-    "@type": "ServiceChannel",
-    serviceUrl: `${SITE_URL}/#contact`,
-    availableLanguage: "English",
-  },
-  serviceType: [
-    "Software consulting",
-    "AI consulting",
-    "Full-stack web application development",
-    "Serverless AWS architecture",
-    "Applied AI and automation prototyping",
-  ],
-  hasOfferCatalog: {
-    "@type": "OfferCatalog",
-    name: "Software and AI consulting services",
-    itemListElement: [
-      {
-        "@type": "Offer",
-        itemOffered: {
-          "@type": "Service",
-          name: "Software / AI consulting",
-        },
-      },
-      {
-        "@type": "Offer",
-        itemOffered: {
-          "@type": "Service",
-          name: "Full-stack implementation",
-        },
-      },
-      {
-        "@type": "Offer",
-        itemOffered: {
-          "@type": "Service",
-          name: "Cloud architecture and automation",
-        },
-      },
-      {
-        "@type": "Offer",
-        itemOffered: {
-          "@type": "Service",
-          name: "Applied AI and interactive prototypes",
-        },
-      },
-    ],
   },
 };
 
@@ -318,7 +304,6 @@ export const homepageStructuredData = {
     websiteStructuredData,
     profilePageStructuredData,
     personStructuredData,
-    consultingServiceStructuredData,
   ],
 };
 
